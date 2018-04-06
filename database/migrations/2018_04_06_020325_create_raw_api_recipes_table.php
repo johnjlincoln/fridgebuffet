@@ -13,9 +13,21 @@ class CreateRawApiRecipesTable extends Migration
      */
     public function up()
     {
-        Schema::create('raw_api_recipes', function (Blueprint $table) {
+        Schema::create('api_tblRawApiRecipes', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+            $table->unsignedInteger('recipe_id');
+            $table->string('recipe_title');
+            $table->string('recipe_source_url');
+            $table->string('recipe_f2f_url', 100);
+            $table->string('recipe_publisher', 100);
+            $table->string('recipe_publisher_url', 100);
+            $table->decimal('recipe_social_rank' 16, 14);
+            $table->timestamps()
+                  ->useCurrent();
+                  
+            $table->foreign('recipe_id')
+                  ->references('recipe_id')
+                  ->on('tblRecipe');
         });
     }
 
