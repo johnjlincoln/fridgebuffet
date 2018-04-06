@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+// TODO change namespace of user model
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
