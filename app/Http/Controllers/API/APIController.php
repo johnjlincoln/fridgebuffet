@@ -18,9 +18,31 @@ class APIController extends Controller
      */
     public function getRecipes($api_page = 1)
     {
-        // $api_page = $api_page ?? 1;
-        $search_url = 'http://food2fork.com/api/search?key=' . env('F2F_API_KEY') . '&page=' . $api_page;
-        echo $search_url;
+        $params = [
+            'key'  => env('F2F_API_KEY'),
+            'page' => $api_page
+        ];
+        $defaults = [
+            CURLOPT_URL            => 'http://food2fork.com/api/search',
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => $params,
+            CURLOPT_RETURNTRANSFER => true
+        ];
+        $ch = curl_init();
+        curl_setopt_array($ch, $defaults);
+
+        // Send request
+        $response = curl_exec($ch);
+
+        // Check for errors and display the error message
+        if ($errno = curl_errno($ch)) {
+            $error_message = curl_strerror($errno);
+            echo "cURL error ({$errno}):\n {$error_message}";
+        }
+
+        // Close the handle
+        curl_close($ch);
+        echo $response;
     }
 
     /**
@@ -32,28 +54,5 @@ class APIController extends Controller
     public function getRecipeData($id)
     {
         $get_url = 'http://food2fork.com/api/get?key=' . env('F2F_API_KEY') . '&rId=' . $id;
-    }
-
-    /**
-     * Update the specified recipe_id.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
