@@ -23,6 +23,7 @@ class CreateRawApiRecipesTable extends Migration
             $table->string('api_recipe_publisher', 100);
             $table->string('api_recipe_publisher_url', 100);
             $table->decimal('api_recipe_social_rank', 16, 14);
+            $table->unsignedInteger('api_recipe_page');
             $table->integer('assigned_recipe_id')
                   ->nullable();
             $table->dateTime('date_assigned')

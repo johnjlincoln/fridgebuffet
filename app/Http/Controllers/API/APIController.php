@@ -4,43 +4,38 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\API\apiRecipe;
+use App\Models\API\apiRecipeData;
 
 class APIController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
+     * Retrieve a collection of recipe_ids along with recipe metadata from F2F API.
      *
+     * @param  int  $api_page - Page of F2F results to search
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getRecipes($api_page = 1)
     {
-        //
+        // $api_page = $api_page ?? 1;
+        $search_url = 'http://food2fork.com/api/search?key=' . env('F2F_API_KEY') . '&page=' . $api_page;
+        echo $search_url;
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Retrieve the specified resource.
+     * Retrieve data for a recipe_id from F2F API.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function get($id)
+    public function getRecipeData($id)
     {
-        //
+        $get_url = 'http://food2fork.com/api/get?key=' . env('F2F_API_KEY') . '&rId=' . $id;
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified recipe_id.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id

@@ -4,7 +4,7 @@ namespace App\Models\API;
 
 use Illuminate\Database\Eloquent\Model;
 
-class RecipeAPI extends Model
+class apiRecipe extends Model
 {
     /**
      * The table associated with the model.
@@ -46,10 +46,10 @@ class RecipeAPI extends Model
     ];
 
     /**
-    * Get the RecipeAPI that owns the data.
+    * Get the apiRecipe that owns the data.
     */
-    public function recipeDataAPI()
+    public function apiRecipeData()
     {
-        return $this->hasMany('App\Models\API\RecipeDataAPI');
+        return $this->hasMany('App\Models\API\apiRecipeData');
     }
 }
