@@ -7,5 +7,5 @@ use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
-  // Home Controller (for like, the homepage stuff)
+    // Home Controller (for like, the homepage stuff)
 }

@@ -7,23 +7,25 @@ use Illuminate\Database\Migrations\Migration;
 class CreateRecipesTable extends Migration
 {
     /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+    * Run the migrations.
+    *
+    * @return void
+    */
     public function up()
     {
         Schema::create('recipes', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('recipe_id');
+
+
             $table->timestamps();
         });
     }
 
     /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+    * Reverse the migrations.
+    *
+    * @return void
+    */
     public function down()
     {
         Schema::dropIfExists('recipes');

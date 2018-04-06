@@ -8,5 +8,5 @@ use App\Http\Controllers\Controller;
 
 class RecipeController extends Controller
 {
-  // Primary Recipe Controller
+    // Primary Recipe Controller
 }

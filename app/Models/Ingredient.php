@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ingredient extends Model
 {
-  // Ingredient Modeel
+    // Ingredient Modeel
 }
