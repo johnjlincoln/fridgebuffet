@@ -15,19 +15,20 @@ class CreateRawApiRecipesTable extends Migration
     {
         Schema::create('api_tblRawApiRecipes', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('recipe_id');
-            $table->string('recipe_title');
-            $table->string('recipe_source_url');
-            $table->string('recipe_f2f_url', 100);
-            $table->string('recipe_publisher', 100);
-            $table->string('recipe_publisher_url', 100);
-            $table->decimal('recipe_social_rank' 16, 14);
+            $table->unsignedInteger('api_f2f_id');
+            $table->string('api_recipe_title');
+            $table->string('api_recipe_source_url');
+            $table->string('api_recipe_f2f_url', 100);
+            $table->string('api_recipe_publisher', 100);
+            $table->string('api_recipe_publisher_url', 100);
+            $table->decimal('api_recipe_social_rank' 16, 14);
+            $table->integer('assigned_recipe_id')
+                  ->nullable();
+            $table->dateTime('date_assigned')
+                  ->nullable();
+
             $table->timestamps()
                   ->useCurrent();
-                  
-            $table->foreign('recipe_id')
-                  ->references('recipe_id')
-                  ->on('tblRecipe');
         });
     }
 
@@ -38,6 +39,6 @@ class CreateRawApiRecipesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('raw_api_recipes');
+        Schema::dropIfExists('api_tblRawApiRecipes');
     }
 }

@@ -13,9 +13,22 @@ class CreateRawApiRecipeDataTable extends Migration
     */
     public function up()
     {
-        Schema::create('raw_api_recipe_data', function (Blueprint $table) {
+        Schema::create('api_tblRawApiRecipeData', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+            $table->unsignedInteger('api_id');
+            $table->unsignedInteger('api_f2f_id');
+            $table->string('ingredient_data');
+            $table->integer('assigned_recipe_id')
+                  ->nullable();
+            $table->dateTime('date_assigned')
+                  ->nullable();
+
+            $table->timestamps()
+                  ->useCurrent();
+
+            $table->foreign('api_id')
+                  ->references('id')
+                  ->on('api_tblRawApiRecipes');
         });
     }
 
@@ -26,6 +39,6 @@ class CreateRawApiRecipeDataTable extends Migration
     */
     public function down()
     {
-        Schema::dropIfExists('raw_api_recipe_data');
+        Schema::dropIfExists('api_tblRawApiRecipeData');
     }
 }
