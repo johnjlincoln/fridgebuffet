@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\API\apiRecipe;
 use App\Models\API\apiRecipeData;
+use Validator;
 
 class apiController extends Controller
 {
@@ -60,19 +61,29 @@ class apiController extends Controller
         // Save new models
         // TODO: handle failure
         foreach ($response->recipes as $recipe) {
-            $new_api_recipe = apiRecipe::create([
+            $new_api_recipe = [
                 'api_f2f_id'               => $recipe->recipe_id,
                 'api_recipe_title'         => $recipe->title,
-                'api_recipe_image_url'     => strlen($recipe->image_url) > 191 ? 'too long' : $recipe->image_url,
-                'api_recipe_source_url'    => strlen($recipe->source_url) > 191 ? 'too long' : $recipe->source_url,
-                'api_recipe_f2f_url'       => strlen($recipe->f2f_url) > 191 ? 'too long' : $recipe->f2f_url,
+                'api_recipe_image_url'     => $recipe->image_url,
+                'api_recipe_source_url'    => $recipe->source_url,
+                'api_recipe_f2f_url'       => $recipe->f2f_url,
                 'api_recipe_publisher'     => $recipe->publisher,
-                'api_recipe_publisher_url' => strlen($recipe->publisher_url) > 191 ? 'too long' : $recipe->publisher_url,
+                'api_recipe_publisher_url' => $recipe->publisher_url,
                 'api_recipe_social_rank'   => $recipe->social_rank,
                 'api_recipe_page'          => (int)$api_page
-            ]);
+            ];
+            $validator = Validator::make($new_api_recipe, apiRecipe::$rules);
+            if ($validator->fails()) {
+                //TODO: response
+                print_r($validator->errors());
+                return 'die';
+            }
+            $api_recipe_model =  new apiRecipe();
+            $api_recipe_model->fill($new_api_recipe);
+            $success = $api_recipe_model->save();
         }
-        // TODO: return response!
+        return '$success';
+        // TODO: return response! use the success stuff
     }
 
     /**
@@ -131,5 +142,13 @@ class apiController extends Controller
 
         // TODO: logger? handle failures? return response!
         echo $success ? "Recipe " . $recipe->api_f2f_id . " pulled!" : "Pull failed on recipe " . $recipe->api_f2f_id . "failed...";
+    }
+
+    public function test()
+    {
+        $thing = new apiRecipe();
+        echo $thing->attributes;
+        // echo 'This test was ' . $test;
+        // echo true;
     }
 }

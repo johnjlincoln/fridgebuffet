@@ -34,8 +34,9 @@ class apiRecipe extends Model
     */
     public $timestamps = true;
 
+
     /**
-    * The attributes that are mass assignable.
+    * The model attributes that are mass assignable.
     *
     * @var array
     */
@@ -66,6 +67,24 @@ class apiRecipe extends Model
     ];
 
     /**
+    * Validation rules for the model attributes.
+    *
+    * @var array
+    */
+    public static $rules = [
+        'api_recipe_title'         => 'alpha_num|max:191',
+        'api_f2f_id'               => 'max:10',
+        'api_recipe_title'         => 'max:191',
+        'api_recipe_image_url'     => 'max:191',
+        'api_recipe_source_url'    => 'max:191',
+        'api_recipe_f2f_url'       => 'max:191',
+        'api_recipe_publisher'     => 'max:191',
+        'api_recipe_publisher_url' => 'max:191',
+        'api_recipe_social_rank'   => 'numeric',
+        'api_recipe_page'          => 'numeric'
+    ];
+
+    /**
     * Get the apiRecipe that owns the data.
     */
     public function apiRecipeData()
@@ -74,7 +93,7 @@ class apiRecipe extends Model
     }
 
     /**
-    * Scope a query to only include recipes that have not had their data pulled.
+    * Scopes a query to only include recipes that have not had their data pulled.
     *
     * @param \Illuminate\Database\Eloquent\Builder $query
     * @return \Illuminate\Database\Eloquent\Builder
@@ -82,58 +101,5 @@ class apiRecipe extends Model
     public function scopeDataNotPulled($query)
     {
         return $query->where('api_recipe_data_pulled', false);
-    }
-
-    /**
-     * VALIDATION
-     */
-
-    /**
-     * [protected description]
-     * @var [type]
-     */
-    protected $rules = [
-        'api_recipe_title' => 'alpha_num|max:191',
-        'api_f2f_id' =? 'max:10',
-        'api_recipe_title' => 'max:191',
-        'api_recipe_image_url' => 'max:191',
-        'api_recipe_source_url' => 'max:191',
-        'api_recipe_f2f_url' => 'max:191',
-        'api_recipe_publisher' => 'max:191',
-        'api_recipe_publisher_url' => 'max:191',
-        'api_recipe_social_rank' => 'alpha_num',
-        'api_recipe_page' => 'numeric'
-    ];
-
-    /**
-     * [protected description]
-     * @var [type]
-     */
-    protected $errors;
-
-    /**
-     * [validate description]
-     * @param  [type] $data [description]
-     * @return [type]       [description]
-     */
-    public function validate($data)
-    {
-        $v = Validator::make($data, $this->rules);
-
-        if ($v->fails()) {
-            $this->errors = $v->errors;
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * [errors description]
-     * @return [type] [description]
-     */
-    public function errors()
-    {
-        return $this->errors;
     }
 }
