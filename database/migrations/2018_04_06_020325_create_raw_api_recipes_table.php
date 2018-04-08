@@ -15,14 +15,14 @@ class CreateRawApiRecipesTable extends Migration
     {
         Schema::create('api_raw_api_recipes', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('api_f2f_id');
-            $table->string('api_recipe_title', 100);
-            $table->string('api_recipe_image_url', 100);
-            $table->string('api_recipe_source_url', 100);
-            $table->string('api_recipe_f2f_url', 100);
-            $table->string('api_recipe_publisher', 100);
-            $table->string('api_recipe_publisher_url', 100);
-            $table->decimal('api_recipe_social_rank', 16, 14);
+            $table->string('api_f2f_id');
+            $table->string('api_recipe_title');
+            $table->string('api_recipe_image_url');
+            $table->string('api_recipe_source_url');
+            $table->string('api_recipe_f2f_url');
+            $table->string('api_recipe_publisher');
+            $table->string('api_recipe_publisher_url');
+            $table->decimal('api_recipe_social_rank');
             $table->unsignedInteger('api_recipe_page');
             $table->integer('assigned_recipe_id')
                   ->nullable();

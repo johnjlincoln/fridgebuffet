@@ -40,7 +40,8 @@ class apiRecipe extends Model
         'api_recipe_f2f_url',
         'api_recipe_publisher',
         'api_recipe_publisher_url',
-        'api_recipe_social_rank'
+        'api_recipe_social_rank',
+        'api_recipe_page',
         'assigned_recipe_id',
         'date_assigned'
     ];

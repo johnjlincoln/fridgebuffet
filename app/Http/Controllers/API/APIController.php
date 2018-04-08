@@ -40,9 +40,27 @@ class APIController extends Controller
             echo "cURL error ({$errno}):\n {$error_message}";
         }
 
-        // Close the handle
+        // Close the handle and load the response
         curl_close($ch);
-        echo $response;
+        $response = json_decode($response);
+        $recipes = $response->recipes;
+        // echo($api_page);
+
+        foreach ($recipes as $recipe) {
+            // json_decode($recipe);
+            // print_r($recipe);
+            $new_api_recipe = apiRecipe::create([
+                'api_f2f_id'               => $recipe->recipe_id,
+                'api_recipe_title'         => $recipe->title,
+                'api_recipe_image_url'     => strlen($recipe->image_url) > 191 ? 'too long' : $recipe->image_url,
+                'api_recipe_source_url'    => strlen($recipe->source_url) > 191 ? 'too long' : $recipe->source_url,
+                'api_recipe_f2f_url'       => strlen($recipe->f2f_url) > 191 ? 'too long' : $recipe->f2f_url,
+                'api_recipe_publisher'     => $recipe->publisher,
+                'api_recipe_publisher_url' => strlen($recipe->publisher_url) > 191 ? 'too long' : $recipe->publisher_url,
+                'api_recipe_social_rank'   => $recipe->social_rank,
+                'api_recipe_page'          => (int)$api_page
+            ]);
+        }
     }
 
     /**
