@@ -17,7 +17,11 @@ use Validator;
 
 class apiController extends Controller
 {
-
+    /**
+     * TODO: Response Object
+     * TODO: Save just the ID of recipes that fail validation
+     * TODO: Logs?
+     */
     /**
      * Retrieves a page of recipes from the F2F API, loads them into apiRecipe
      * models, and saves those models.
@@ -128,11 +132,20 @@ class apiController extends Controller
 
         // Save new models
         foreach ($response->recipe->ingredients as $ingredient) {
-            $new_api_recipe_data = apiRecipeData::create([
+            $new_api_recipe_data = [
                 'api_id'              => $recipe->id,
                 'api_f2f_id'          => $recipe->api_f2f_id,
-                'api_ingredient_data' => (isset($ingredient) && strlen($ingredient) < 191) ? $ingredient : 'not found'
-            ]);
+                'api_ingredient_data' => isset($ingredient) ? $ingredient : 'not found'
+            ];
+            $validator = Validator::make($new_api_recipe_data, apiRecipeData::$rules);
+            if ($validator->fails()) {
+                //TODO: response
+                print_r($validator->errors());
+                return 'die';
+            }
+            $api_recipe_data_model = new apiRecipeData();
+            $api_recipe_data_model->fill($new_api_recipe_data);
+            $success = $api_recipe_data_model->save();
         }
         // TODO: logger? do this whole thing as 1 transaction? handle failures?
 
@@ -142,13 +155,5 @@ class apiController extends Controller
 
         // TODO: logger? handle failures? return response!
         echo $success ? "Recipe " . $recipe->api_f2f_id . " pulled!" : "Pull failed on recipe " . $recipe->api_f2f_id . "failed...";
-    }
-
-    public function test()
-    {
-        $thing = new apiRecipe();
-        echo $thing->attributes;
-        // echo 'This test was ' . $test;
-        // echo true;
     }
 }

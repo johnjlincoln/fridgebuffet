@@ -59,6 +59,16 @@ class apiRecipeData extends Model
     ];
 
     /**
+    * Validation rules for the model attributes.
+    *
+    * @var array
+    */
+    public static $rules = [
+        'api_f2f_id'          => 'max:10',
+        'api_ingredient_data' => 'max:191'
+    ];
+
+    /**
     * Get the apiRecipeData that owns the data.
     */
     public function apiRecipe()
