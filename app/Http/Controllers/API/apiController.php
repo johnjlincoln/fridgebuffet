@@ -18,11 +18,6 @@ use Validator;
 class apiController extends Controller
 {
     /**
-     * TODO: Response Object
-     * TODO: Save just the ID of recipes that fail validation
-     * TODO: Logs?
-     */
-    /**
      * Retrieves a page of recipes from the F2F API, loads them into apiRecipe
      * models, and saves those models.
      *
@@ -52,7 +47,6 @@ class apiController extends Controller
         $response = curl_exec($ch);
 
         // Check for errors and display the error message
-        // TODO: logger? json return? Not this though
         if ($errno = curl_errno($ch)) {
             $error_message = curl_strerror($errno);
             return response()->json([
@@ -65,7 +59,6 @@ class apiController extends Controller
         $response = json_decode($response);
 
         // Save new models
-        // TODO: handle failure
         foreach ($response->recipes as $recipe) {
             $new_api_recipe = [
                 'api_f2f_id'               => $recipe->recipe_id,
@@ -80,16 +73,22 @@ class apiController extends Controller
             ];
             $validator = Validator::make($new_api_recipe, apiRecipe::$rules);
             if ($validator->fails()) {
-                //TODO: response
-                print_r($validator->errors());
-                return 'die';
+                return response()->json([
+                    'success'     => 'false',
+                    'failed_rId'  => $recipe->recipe_id,
+                    'page_failed' => $api_page,
+                    'errors'      => $validator->errors()
+                ]);
             }
             $api_recipe_model =  new apiRecipe();
             $api_recipe_model->fill($new_api_recipe);
             $success = $api_recipe_model->save();
         }
-        return '$success';
-        // TODO: return response! use the success stuff
+
+        return response()->json([
+            'success' => 'true',
+            'page_retrieved' => $api_page
+        ]);
     }
 
     /**
