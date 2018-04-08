@@ -104,8 +104,10 @@ class apiRecipe extends Model
     }
 
     /**
-     * [markRecipeDataPulled description]
-     * @return [type] [description]
+     * Marks the current apiRecipe as "pulled" indicating that its apiRecipeData model(s)
+     * have been pulled from the F2F API.
+     *
+     * @return bool
      */
     public function markRecipeDataPulled()
     {
