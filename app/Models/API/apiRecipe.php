@@ -102,4 +102,13 @@ class apiRecipe extends Model
     {
         return $query->where('api_recipe_data_pulled', false);
     }
+
+    /**
+     * [markRecipeDataPulled description]
+     * @return [type] [description]
+     */
+    public function markRecipeDataPulled()
+    {
+        return $this->api_recipe_data_pulled = true;
+    }
 }

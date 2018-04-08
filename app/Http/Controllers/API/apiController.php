@@ -55,7 +55,9 @@ class apiController extends Controller
         // TODO: logger? json return? Not this though
         if ($errno = curl_errno($ch)) {
             $error_message = curl_strerror($errno);
-            echo "cURL error ({$errno}):\n {$error_message}";
+            return response()->json([
+                'error' => "cURL error ({$errno}):\n {$error_message}"
+                ]);
         }
 
         // Close the handle and load the response
@@ -141,16 +143,16 @@ class apiController extends Controller
             if ($validator->fails()) {
                 //TODO: response
                 print_r($validator->errors());
-                return 'die';
+                die();
             }
             $api_recipe_data_model = new apiRecipeData();
             $api_recipe_data_model->fill($new_api_recipe_data);
             $success = $api_recipe_data_model->save();
+            // TODO: we need to abort if failure
         }
-        // TODO: logger? do this whole thing as 1 transaction? handle failures?
 
         // Mark the apiRecipe as having its data pulled
-        $recipe->api_recipe_data_pulled = true;
+        $recipe->markRecipeDataPulled();
         $success = $recipe->save();
 
         // TODO: logger? handle failures? return response!
