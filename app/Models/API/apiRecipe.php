@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Model for Recipes pulled from the Food2Fork API
+ *
+ * @author John J Lincoln <jlincoln88@gmail.com>
+ * @copyright 2018 Arctic Pangolin
+ */
+
 namespace App\Models\API;
 
 use Illuminate\Database\Eloquent\Model;
