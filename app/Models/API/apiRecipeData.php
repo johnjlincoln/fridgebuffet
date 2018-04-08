@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Model for Recipe Data pulled from the Food2Fork API
+ *
+ * @author John J Lincoln <jlincoln88@gmail.com>
+ * @copyright 2018 Arctic Pangolin
+ */
+
 namespace App\Models\API;
 
 use Illuminate\Database\Eloquent\Model;
@@ -38,6 +45,17 @@ class apiRecipeData extends Model
         'api_ingredient_data',
         'assigned_recipe_id',
         'date_assigned'
+    ];
+
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at'
     ];
 
     /**

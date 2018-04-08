@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Endpoints for handling data pulls from the Food2Fork API.
+ *
+ * @author John J Lincoln <jlincoln88@gmail.com>
+ * @copyright 2018 Arctic Pangolin
+ */
+
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
@@ -82,7 +89,7 @@ class apiController extends Controller
 
         // Configure cURL
         $params = [
-            'key'  => env('F2F_API_KEY'),
+            'key' => env('F2F_API_KEY'),
             'rId' => $recipe->api_f2f_id
         ];
         $defaults = [
