@@ -13,10 +13,15 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\API\apiRecipe;
 use App\Models\API\apiRecipeData;
+use Validator;
 
 class apiController extends Controller
 {
-
+    /**
+     * TODO: Response Object
+     * TODO: Save just the ID of recipes that fail validation
+     * TODO: Logs?
+     */
     /**
      * Retrieves a page of recipes from the F2F API, loads them into apiRecipe
      * models, and saves those models.
@@ -60,19 +65,29 @@ class apiController extends Controller
         // Save new models
         // TODO: handle failure
         foreach ($response->recipes as $recipe) {
-            $new_api_recipe = apiRecipe::create([
+            $new_api_recipe = [
                 'api_f2f_id'               => $recipe->recipe_id,
                 'api_recipe_title'         => $recipe->title,
-                'api_recipe_image_url'     => strlen($recipe->image_url) > 191 ? 'too long' : $recipe->image_url,
-                'api_recipe_source_url'    => strlen($recipe->source_url) > 191 ? 'too long' : $recipe->source_url,
-                'api_recipe_f2f_url'       => strlen($recipe->f2f_url) > 191 ? 'too long' : $recipe->f2f_url,
+                'api_recipe_image_url'     => $recipe->image_url,
+                'api_recipe_source_url'    => $recipe->source_url,
+                'api_recipe_f2f_url'       => $recipe->f2f_url,
                 'api_recipe_publisher'     => $recipe->publisher,
-                'api_recipe_publisher_url' => strlen($recipe->publisher_url) > 191 ? 'too long' : $recipe->publisher_url,
+                'api_recipe_publisher_url' => $recipe->publisher_url,
                 'api_recipe_social_rank'   => $recipe->social_rank,
                 'api_recipe_page'          => (int)$api_page
-            ]);
+            ];
+            $validator = Validator::make($new_api_recipe, apiRecipe::$rules);
+            if ($validator->fails()) {
+                //TODO: response
+                print_r($validator->errors());
+                return 'die';
+            }
+            $api_recipe_model =  new apiRecipe();
+            $api_recipe_model->fill($new_api_recipe);
+            $success = $api_recipe_model->save();
         }
-        // TODO: return response!
+        return '$success';
+        // TODO: return response! use the success stuff
     }
 
     /**
@@ -117,11 +132,20 @@ class apiController extends Controller
 
         // Save new models
         foreach ($response->recipe->ingredients as $ingredient) {
-            $new_api_recipe_data = apiRecipeData::create([
+            $new_api_recipe_data = [
                 'api_id'              => $recipe->id,
                 'api_f2f_id'          => $recipe->api_f2f_id,
                 'api_ingredient_data' => isset($ingredient) ? $ingredient : 'not found'
-            ]);
+            ];
+            $validator = Validator::make($new_api_recipe_data, apiRecipeData::$rules);
+            if ($validator->fails()) {
+                //TODO: response
+                print_r($validator->errors());
+                return 'die';
+            }
+            $api_recipe_data_model = new apiRecipeData();
+            $api_recipe_data_model->fill($new_api_recipe_data);
+            $success = $api_recipe_data_model->save();
         }
         // TODO: logger? do this whole thing as 1 transaction? handle failures?
 
