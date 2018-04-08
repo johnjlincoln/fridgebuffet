@@ -83,4 +83,57 @@ class apiRecipe extends Model
     {
         return $query->where('api_recipe_data_pulled', false);
     }
+
+    /**
+     * VALIDATION
+     */
+
+    /**
+     * [protected description]
+     * @var [type]
+     */
+    protected $rules = [
+        'api_recipe_title' => 'alpha_num|max:191',
+        'api_f2f_id' =? 'max:10',
+        'api_recipe_title' => 'max:191',
+        'api_recipe_image_url' => 'max:191',
+        'api_recipe_source_url' => 'max:191',
+        'api_recipe_f2f_url' => 'max:191',
+        'api_recipe_publisher' => 'max:191',
+        'api_recipe_publisher_url' => 'max:191',
+        'api_recipe_social_rank' => 'alpha_num',
+        'api_recipe_page' => 'numeric'
+    ];
+
+    /**
+     * [protected description]
+     * @var [type]
+     */
+    protected $errors;
+
+    /**
+     * [validate description]
+     * @param  [type] $data [description]
+     * @return [type]       [description]
+     */
+    public function validate($data)
+    {
+        $v = Validator::make($data, $this->rules);
+
+        if ($v->fails()) {
+            $this->errors = $v->errors;
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * [errors description]
+     * @return [type] [description]
+     */
+    public function errors()
+    {
+        return $this->errors;
+    }
 }

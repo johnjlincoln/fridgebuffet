@@ -120,7 +120,7 @@ class apiController extends Controller
             $new_api_recipe_data = apiRecipeData::create([
                 'api_id'              => $recipe->id,
                 'api_f2f_id'          => $recipe->api_f2f_id,
-                'api_ingredient_data' => isset($ingredient) ? $ingredient : 'not found'
+                'api_ingredient_data' => (isset($ingredient) && strlen($ingredient) < 191) ? $ingredient : 'not found'
             ]);
         }
         // TODO: logger? do this whole thing as 1 transaction? handle failures?
