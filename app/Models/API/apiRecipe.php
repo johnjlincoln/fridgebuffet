@@ -42,6 +42,7 @@ class apiRecipe extends Model
         'api_recipe_publisher_url',
         'api_recipe_social_rank',
         'api_recipe_page',
+        'api_recipe_data_pulled',
         'assigned_recipe_id',
         'date_assigned'
     ];

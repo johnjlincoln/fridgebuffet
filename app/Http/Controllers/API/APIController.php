@@ -43,12 +43,8 @@ class APIController extends Controller
         // Close the handle and load the response
         curl_close($ch);
         $response = json_decode($response);
-        $recipes = $response->recipes;
-        // echo($api_page);
-
-        foreach ($recipes as $recipe) {
-            // json_decode($recipe);
-            // print_r($recipe);
+        // saves new models - does not report / handle
+        foreach ($response->recipes as $recipe) {
             $new_api_recipe = apiRecipe::create([
                 'api_f2f_id'               => $recipe->recipe_id,
                 'api_recipe_title'         => $recipe->title,
@@ -69,8 +65,42 @@ class APIController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getRecipeData($id)
+    public function getRecipeData()
     {
-        $get_url = 'http://food2fork.com/api/get?key=' . env('F2F_API_KEY') . '&rId=' . $id;
+        $recipe = new apiRecipe();
+
+        $params = [
+            'key'  => env('F2F_API_KEY'),
+            'rId' => 35368
+        ];
+        $defaults = [
+            CURLOPT_URL            => 'http://food2fork.com/api/get',
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => $params,
+            CURLOPT_RETURNTRANSFER => true
+        ];
+        $ch = curl_init();
+        curl_setopt_array($ch, $defaults);
+
+        // Send request
+        $response = curl_exec($ch);
+
+        // Check for errors and display the error message
+        if ($errno = curl_errno($ch)) {
+            $error_message = curl_strerror($errno);
+            echo "cURL error ({$errno}):\n {$error_message}";
+        }
+
+        // Close the handle and load the response
+        curl_close($ch);
+        $response = json_decode($response);
+        // print_r($response);
+        foreach ($response->recipe->ingredients as $ingredient) {
+            $new_api_recipe_data = apiRecipeData::create([
+                'api_id'          => 13,//$recipe->id,
+                'api_f2f_id'      => 35368,
+                'api_ingredient_data' => isset($ingredient) ? $ingredient : 'not found'
+            ]);
+        }
     }
 }

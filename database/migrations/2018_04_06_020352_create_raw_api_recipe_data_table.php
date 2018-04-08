@@ -17,7 +17,7 @@ class CreateRawApiRecipeDataTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('api_id');
             $table->string('api_f2f_id');
-            $table->string('ingredient_data');
+            $table->string('api_ingredient_data');
             $table->integer('assigned_recipe_id')
                   ->nullable();
             $table->dateTime('date_assigned')

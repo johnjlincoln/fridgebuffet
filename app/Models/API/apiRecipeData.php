@@ -35,7 +35,7 @@ class apiRecipeData extends Model
     protected $fillable = [
         'api_id',
         'api_f2f_id',
-        'ingredient_data',
+        'api_ingredient_data',
         'assigned_recipe_id',
         'date_assigned'
     ];
