@@ -7,19 +7,22 @@ use App\Http\Controllers\Controller;
 use App\Models\API\apiRecipe;
 use App\Models\API\apiRecipeData;
 
-class APIController extends Controller
+class apiController extends Controller
 {
 
     /**
-     * TODO: robust comments - doc autor comments on all new files
-     * Retrieve a collection of recipe_ids along with recipe metadata from F2F API.
+     * Retrieves a page of recipes from the F2F API, loads them into apiRecipe
+     * models, and saves those models.
      *
      * @return \Illuminate\Http\Response
      */
     public function getNewRecipes()
     {
+        // Grab a recipe from the last page retrieved to determine the next page to retrieve
         $recipe_from_last_page = apiRecipe::orderBy('api_recipe_page', 'desc')->first();
         $api_page = $recipe_from_last_page->api_recipe_page + 1;
+
+        // Configure cURL
         $params = [
             'key'  => env('F2F_API_KEY'),
             'page' => $api_page
@@ -37,6 +40,7 @@ class APIController extends Controller
         $response = curl_exec($ch);
 
         // Check for errors and display the error message
+        // TODO: logger? json return? Not this though
         if ($errno = curl_errno($ch)) {
             $error_message = curl_strerror($errno);
             echo "cURL error ({$errno}):\n {$error_message}";
@@ -45,7 +49,9 @@ class APIController extends Controller
         // Close the handle and load the response
         curl_close($ch);
         $response = json_decode($response);
-        // saves new models - does not report / handle
+
+        // Save new models
+        // TODO: handle failure
         foreach ($response->recipes as $recipe) {
             $new_api_recipe = apiRecipe::create([
                 'api_f2f_id'               => $recipe->recipe_id,
@@ -59,16 +65,22 @@ class APIController extends Controller
                 'api_recipe_page'          => (int)$api_page
             ]);
         }
+        // TODO: return response!
     }
 
     /**
-     * Retrieve data for a recipe_id from F2F API.
-     * TODO: doc comment on how this grabs the top recipe with no data then gets it
+     * Retrieves data for an apiRecipe from the F2F API, loads the data into apiRecipeData
+     * models, and saves those models. This function loads apiRecipeData models for the
+     * first apiRecipe that has not had its data pulled.
+     *
      * @return \Illuminate\Http\Response
      */
     public function getRecipeData()
     {
+        // Grab any apiRecipe that has not had its data pulled
         $recipe = apiRecipe::dataNotPulled()->first();
+
+        // Configure cURL
         $params = [
             'key'  => env('F2F_API_KEY'),
             'rId' => $recipe->api_f2f_id
@@ -86,6 +98,7 @@ class APIController extends Controller
         $response = curl_exec($ch);
 
         // Check for errors and display the error message
+        // TODO: logger? json return? Not this though
         if ($errno = curl_errno($ch)) {
             $error_message = curl_strerror($errno);
             echo "cURL error ({$errno}):\n {$error_message}";
@@ -94,7 +107,8 @@ class APIController extends Controller
         // Close the handle and load the response
         curl_close($ch);
         $response = json_decode($response);
-        // print_r($response);
+
+        // Save new models
         foreach ($response->recipe->ingredients as $ingredient) {
             $new_api_recipe_data = apiRecipeData::create([
                 'api_id'              => $recipe->id,
@@ -102,9 +116,13 @@ class APIController extends Controller
                 'api_ingredient_data' => isset($ingredient) ? $ingredient : 'not found'
             ]);
         }
-        // TODO:: do this whole thing as 1 transaction
+        // TODO: logger? do this whole thing as 1 transaction? handle failures?
+
+        // Mark the apiRecipe as having its data pulled
         $recipe->api_recipe_data_pulled = true;
         $success = $recipe->save();
+
+        // TODO: logger? handle failures? return response!
         echo $success ? "Recipe " . $recipe->api_f2f_id . " pulled!" : "Pull failed on recipe " . $recipe->api_f2f_id . "failed...";
     }
 }
