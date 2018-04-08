@@ -17,5 +17,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/get/list', 'API\APIController@getRecipes');
-Route::get('/get/data', 'API\APIController@getRecipeData');
+Route::get('/get/newRecipes', 'API\APIController@getNewRecipes');
+Route::get('/get/recipeData', 'API\APIController@getRecipeData');

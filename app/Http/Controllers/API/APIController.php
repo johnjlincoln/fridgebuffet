@@ -11,13 +11,15 @@ class APIController extends Controller
 {
 
     /**
+     * TODO: robust comments - doc autor comments on all new files
      * Retrieve a collection of recipe_ids along with recipe metadata from F2F API.
      *
-     * @param  int  $api_page - Page of F2F results to search
      * @return \Illuminate\Http\Response
      */
-    public function getRecipes($api_page = 1)
+    public function getNewRecipes()
     {
+        $recipe_from_last_page = apiRecipe::orderBy('api_recipe_page', 'desc')->first();
+        $api_page = $recipe_from_last_page->api_recipe_page + 1;
         $params = [
             'key'  => env('F2F_API_KEY'),
             'page' => $api_page
@@ -61,14 +63,12 @@ class APIController extends Controller
 
     /**
      * Retrieve data for a recipe_id from F2F API.
-     *
-     * @param  int  $id
+     * TODO: doc comment on how this grabs the top recipe with no data then gets it
      * @return \Illuminate\Http\Response
      */
     public function getRecipeData()
     {
-        $recipe = apiRecipe::where('api_f2f_id', 35368)->first();
-
+        $recipe = apiRecipe::dataNotPulled()->first();
         $params = [
             'key'  => env('F2F_API_KEY'),
             'rId' => $recipe->api_f2f_id
@@ -97,13 +97,14 @@ class APIController extends Controller
         // print_r($response);
         foreach ($response->recipe->ingredients as $ingredient) {
             $new_api_recipe_data = apiRecipeData::create([
-                'api_id'          => $recipe->id,
-                'api_f2f_id'      => $recipe->api_f2f_id,
+                'api_id'              => $recipe->id,
+                'api_f2f_id'          => $recipe->api_f2f_id,
                 'api_ingredient_data' => isset($ingredient) ? $ingredient : 'not found'
             ]);
         }
         // TODO:: do this whole thing as 1 transaction
         $recipe->api_recipe_data_pulled = true;
-        $recipe->save();
+        $success = $recipe->save();
+        echo $success ? "Recipe " . $recipe->api_f2f_id . " pulled!" : "Pull failed on recipe " . $recipe->api_f2f_id . "failed...";
     }
 }

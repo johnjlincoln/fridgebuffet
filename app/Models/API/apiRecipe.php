@@ -7,17 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class apiRecipe extends Model
 {
     /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
+    * The table associated with the model.
+    *
+    * @var string
+    */
     protected $table = 'api_raw_api_recipes';
 
     /**
-     * The primary key associated with the model.
-     *
-     * @var string
-     */
+    * The primary key associated with the model.
+    *
+    * @var string
+    */
     protected $primaryKey = 'id';
 
     /**
@@ -53,5 +53,16 @@ class apiRecipe extends Model
     public function apiRecipeData()
     {
         return $this->hasMany('App\Models\API\apiRecipeData');
+    }
+
+    /**
+    * Scope a query to only include recipes that have not had their data pulled.
+    *
+    * @param \Illuminate\Database\Eloquent\Builder $query
+    * @return \Illuminate\Database\Eloquent\Builder
+    */
+    public function scopeDataNotPulled($query)
+    {
+        return $query->where('api_recipe_data_pulled', false);
     }
 }

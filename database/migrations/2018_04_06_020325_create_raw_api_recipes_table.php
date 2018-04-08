@@ -25,7 +25,7 @@ class CreateRawApiRecipesTable extends Migration
             $table->decimal('api_recipe_social_rank');
             $table->unsignedInteger('api_recipe_page');
             $table->boolean('api_recipe_data_pulled')
-                  ->nullable();
+                  ->default(false);
             $table->integer('assigned_recipe_id')
                   ->nullable();
             $table->dateTime('date_assigned')
