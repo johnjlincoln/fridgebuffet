@@ -16,8 +16,8 @@ class CreateRawApiRecipeDataTable extends Migration
         Schema::create('api_raw_api_recipe_data', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('api_id');
-            $table->unsignedInteger('api_f2f_id');
-            $table->string('ingredient_data', 100);
+            $table->string('api_f2f_id');
+            $table->string('api_ingredient_data');
             $table->integer('assigned_recipe_id')
                   ->nullable();
             $table->dateTime('date_assigned')
