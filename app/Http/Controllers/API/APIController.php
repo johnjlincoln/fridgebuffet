@@ -67,11 +67,11 @@ class APIController extends Controller
      */
     public function getRecipeData()
     {
-        $recipe = new apiRecipe();
+        $recipe = apiRecipe::where('api_f2f_id', 35368)->first();
 
         $params = [
             'key'  => env('F2F_API_KEY'),
-            'rId' => 35368
+            'rId' => $recipe->api_f2f_id
         ];
         $defaults = [
             CURLOPT_URL            => 'http://food2fork.com/api/get',
@@ -97,10 +97,13 @@ class APIController extends Controller
         // print_r($response);
         foreach ($response->recipe->ingredients as $ingredient) {
             $new_api_recipe_data = apiRecipeData::create([
-                'api_id'          => 13,//$recipe->id,
-                'api_f2f_id'      => 35368,
+                'api_id'          => $recipe->id,
+                'api_f2f_id'      => $recipe->api_f2f_id,
                 'api_ingredient_data' => isset($ingredient) ? $ingredient : 'not found'
             ]);
         }
+        // TODO:: do this whole thing as 1 transaction
+        $recipe->api_recipe_data_pulled = true;
+        $recipe->save();
     }
 }
