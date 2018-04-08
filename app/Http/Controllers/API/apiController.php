@@ -82,7 +82,7 @@ class apiController extends Controller
 
         // Configure cURL
         $params = [
-            'key'  => env('F2F_API_KEY'),
+            'key' => env('F2F_API_KEY'),
             'rId' => $recipe->api_f2f_id
         ];
         $defaults = [
