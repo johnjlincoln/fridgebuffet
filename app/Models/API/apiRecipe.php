@@ -48,6 +48,17 @@ class apiRecipe extends Model
     ];
 
     /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at'
+    ];
+
+    /**
     * Get the apiRecipe that owns the data.
     */
     public function apiRecipeData()
