@@ -30,7 +30,7 @@ class apiController extends Controller
     {
         // Grab a recipe from the last page retrieved to determine the next page to retrieve
         $recipe_from_last_page = apiRecipe::orderBy('api_recipe_page', 'desc')->first();
-        $api_page = $recipe_from_last_page->api_recipe_page + 1;
+        $api_page = isset($recipe_from_last_page) ? $recipe_from_last_page->api_recipe_page + 1 : 1;
 
         // Configure cURL
         $params = [
@@ -197,7 +197,6 @@ class apiController extends Controller
         Log::info('Recipe pulled.', [
             'rId' => $recipe->api_f2f_id
         ]);
-
         return response()->json([
             'success' => $success,
             'string'  => $success ? 'Recipe ' . $recipe->api_f2f_id . ' pulled!' : 'Pull failed on recipe ' . $recipe->api_f2f_id
