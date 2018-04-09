@@ -21,7 +21,6 @@ curl_setopt_array($ch, $defaults);
 curl_exec($ch);
 
 // Check for errors and display the error message
-// TODO: logger? console print? pass up to cron? Not this though
 if ($errno = curl_errno($ch)) {
     $error_message = curl_strerror($errno);
     echo "cURL error ({$errno}):\n {$error_message}";

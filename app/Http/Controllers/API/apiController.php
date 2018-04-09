@@ -2,6 +2,8 @@
 
 /**
  * Endpoints for handling data pulls from the Food2Fork API.
+ * This is a very opinionated and verbose controller. In this case it's
+ * mainly serving as couple of programatic buttons for a cron job to push.
  *
  * @author John J Lincoln <jlincoln88@gmail.com>
  * @copyright 2018 Arctic Pangolin
@@ -10,6 +12,7 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\API\apiRecipe;
 use App\Models\API\apiRecipeData;
@@ -17,11 +20,6 @@ use Validator;
 
 class apiController extends Controller
 {
-    /**
-     * TODO: Response Object
-     * TODO: Save just the ID of recipes that fail validation
-     * TODO: Logs?
-     */
     /**
      * Retrieves a page of recipes from the F2F API, loads them into apiRecipe
      * models, and saves those models.
@@ -32,7 +30,7 @@ class apiController extends Controller
     {
         // Grab a recipe from the last page retrieved to determine the next page to retrieve
         $recipe_from_last_page = apiRecipe::orderBy('api_recipe_page', 'desc')->first();
-        $api_page = $recipe_from_last_page->api_recipe_page + 1;
+        $api_page = isset($recipe_from_last_page) ? $recipe_from_last_page->api_recipe_page + 1 : 1;
 
         // Configure cURL
         $params = [
@@ -52,10 +50,11 @@ class apiController extends Controller
         $response = curl_exec($ch);
 
         // Check for errors and display the error message
-        // TODO: logger? json return? Not this though
         if ($errno = curl_errno($ch)) {
             $error_message = curl_strerror($errno);
-            echo "cURL error ({$errno}):\n {$error_message}";
+            return response()->json([
+                'error' => "cURL error ({$errno}):\n {$error_message}"
+                ]);
         }
 
         // Close the handle and load the response
@@ -63,7 +62,6 @@ class apiController extends Controller
         $response = json_decode($response);
 
         // Save new models
-        // TODO: handle failure
         foreach ($response->recipes as $recipe) {
             $new_api_recipe = [
                 'api_f2f_id'               => $recipe->recipe_id,
@@ -78,16 +76,41 @@ class apiController extends Controller
             ];
             $validator = Validator::make($new_api_recipe, apiRecipe::$rules);
             if ($validator->fails()) {
-                //TODO: response
-                print_r($validator->errors());
-                return 'die';
+                Log::error('Get new recipe failed. Validation failed.', [
+                    'rId'         => $recipe->recipe_id,
+                    'page_failed' => $api_page,
+                    'errors'      => $validator->errors()
+                ]);
+                return response()->json([
+                    'rId'         => $recipe->recipe_id,
+                    'success'     => 'false',
+                    'page_failed' => $api_page,
+                    'errors'      => $validator->errors()
+                ]);
             }
             $api_recipe_model =  new apiRecipe();
             $api_recipe_model->fill($new_api_recipe);
             $success = $api_recipe_model->save();
+            if (!$success) {
+                Log::error('Get new recipe failed. Save failed post validation.', [
+                    'rId'    => $recipe->api_f2f_id,
+                    'api_id' => $recipe->id,
+                    'errors' => $validator->errors()
+                ]);
+                return response()->json([
+                    'rId'     => $recipe->recipe_id,
+                    'success' => 'false',
+                    'errors'  => $validator->errors()
+                ]);
+            }
         }
-        return '$success';
-        // TODO: return response! use the success stuff
+        Log::info('New page of recipes pulled.', [
+            'page_retrieved' => $api_page
+        ]);
+        return response()->json([
+            'success'        => 'true',
+            'page_retrieved' => $api_page
+        ]);
     }
 
     /**
@@ -120,10 +143,11 @@ class apiController extends Controller
         $response = curl_exec($ch);
 
         // Check for errors and display the error message
-        // TODO: logger? json return? Not this though
         if ($errno = curl_errno($ch)) {
             $error_message = curl_strerror($errno);
-            echo "cURL error ({$errno}):\n {$error_message}";
+            return response()->json([
+                'error' => "cURL error ({$errno}):\n {$error_message}"
+                ]);
         }
 
         // Close the handle and load the response
@@ -139,21 +163,43 @@ class apiController extends Controller
             ];
             $validator = Validator::make($new_api_recipe_data, apiRecipeData::$rules);
             if ($validator->fails()) {
-                //TODO: response
-                print_r($validator->errors());
-                return 'die';
+                Log::error('Pull failed for rId. Validation failed.', [
+                    'rId'    => $recipe->api_f2f_id,
+                    'api_id' => $recipe->id,
+                    'errors' => $validator->errors()
+                ]);
+                return response()->json([
+                    'rId'     => $recipe->api_f2f_id,
+                    'success' => 'false',
+                    'errors'  => $validator->errors()
+                ]);
             }
             $api_recipe_data_model = new apiRecipeData();
             $api_recipe_data_model->fill($new_api_recipe_data);
             $success = $api_recipe_data_model->save();
+            if (!$success) {
+                Log::error('Pull failed for rId. Save failed post validation.', [
+                    'rId'    => $recipe->api_f2f_id,
+                    'api_id' => $recipe->id,
+                    'errors' => $validator->errors()
+                ]);
+                return response()->json([
+                    'rId'     => $recipe->api_f2f_id,
+                    'success' => 'false',
+                    'errors'  => $validator->errors()
+                ]);
+            }
         }
-        // TODO: logger? do this whole thing as 1 transaction? handle failures?
 
         // Mark the apiRecipe as having its data pulled
-        $recipe->api_recipe_data_pulled = true;
+        $recipe->markRecipeDataPulled();
         $success = $recipe->save();
-
-        // TODO: logger? handle failures? return response!
-        echo $success ? "Recipe " . $recipe->api_f2f_id . " pulled!" : "Pull failed on recipe " . $recipe->api_f2f_id . "failed...";
+        Log::info('Recipe pulled.', [
+            'rId' => $recipe->api_f2f_id
+        ]);
+        return response()->json([
+            'success' => $success,
+            'string'  => $success ? 'Recipe ' . $recipe->api_f2f_id . ' pulled!' : 'Pull failed on recipe ' . $recipe->api_f2f_id
+            ]);
     }
 }

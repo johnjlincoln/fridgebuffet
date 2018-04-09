@@ -85,7 +85,7 @@ class apiRecipe extends Model
     ];
 
     /**
-    * Get the apiRecipe that owns the data.
+    * Get the apiRecipeData that belongs to this apiRecipe.
     */
     public function apiRecipeData()
     {
@@ -101,5 +101,16 @@ class apiRecipe extends Model
     public function scopeDataNotPulled($query)
     {
         return $query->where('api_recipe_data_pulled', false);
+    }
+
+    /**
+     * Marks the current apiRecipe as "pulled" indicating that its apiRecipeData model(s)
+     * have been pulled from the F2F API.
+     *
+     * @return bool
+     */
+    public function markRecipeDataPulled()
+    {
+        return $this->api_recipe_data_pulled = true;
     }
 }
