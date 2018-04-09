@@ -85,7 +85,7 @@ class apiRecipe extends Model
     ];
 
     /**
-    * Get the apiRecipe that owns the data.
+    * Get the apiRecipeData that belongs to this apiRecipe.
     */
     public function apiRecipeData()
     {

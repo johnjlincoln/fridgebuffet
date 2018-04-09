@@ -2,6 +2,8 @@
 
 /**
  * Endpoints for handling data pulls from the Food2Fork API.
+ * This is a very opinionated and verbose controller. In this case it's
+ * mainly serving as couple of programatic buttons for a cron job to push.
  *
  * @author John J Lincoln <jlincoln88@gmail.com>
  * @copyright 2018 Arctic Pangolin
