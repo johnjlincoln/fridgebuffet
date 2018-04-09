@@ -1,4 +1,4 @@
-<!-- Home Page View -->
+<!-- Admin View -->
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
     <head>
@@ -10,7 +10,7 @@
     </head>
     <body>
     <h2 style="text-align: center"> Laravel and React application </h2>
-        <div id="home"></div>
+        <div id="admin_main"></div>
         <script src="{{mix('js/app.js')}}" ></script>
     </body>
 </html>
