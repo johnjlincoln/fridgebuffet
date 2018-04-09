@@ -13,8 +13,6 @@ class AdminMain extends Component {
 
 export default AdminMain;
 
-
-
 if (document.getElementById('admin_main')) {
     ReactDOM.render(<AdminMain />, document.getElementById('admin_main'));
 }
