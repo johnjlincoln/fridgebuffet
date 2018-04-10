@@ -202,4 +202,25 @@ class apiController extends Controller
             'string'  => $success ? 'Recipe ' . $recipe->api_f2f_id . ' pulled!' : 'Pull failed on recipe ' . $recipe->api_f2f_id
             ]);
     }
+
+    public function getPageInfo()
+    {
+        $recipe = apiRecipe::orderBy('api_recipe_page', 'desc')->first();
+        $current_page = isset($recipe) ? $recipe->api_recipe_page : 1;
+        $next_page = isset($recipe) ? $recipe->api_recipe_page + 1 : 1;
+
+        return response()->json([
+            'current_page' => $current_page,
+            'next_page'    => $next_page
+        ]);
+    }
+
+    public function getUnpulledApiRecipeId()
+    {
+        $recipe = apiRecipe::dataNotPulled()->first();
+
+        return response()->json([
+            'api_f2f_id' => $recipe->api_f2f_id
+        ]);
+    }
 }

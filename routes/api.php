@@ -21,3 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Route::middleware('auth:api')->get('/get/newRecipes', 'API\apiController@getNewRecipes');
 Route::get('/get/newRecipes', 'API\apiController@getNewRecipes');
 Route::get('/get/recipeData', 'API\apiController@getRecipeData');
+Route::get('/get/pageInfo', 'API\apiController@getPageInfo');
+Route::get('/get/unpulledApiRecipe', 'API\apiController@getUnpulledApiRecipeId');
