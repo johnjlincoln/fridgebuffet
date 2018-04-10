@@ -58,19 +58,19 @@ class apiController extends Controller
                 'api_recipe_publisher'     => $recipe['publisher'],
                 'api_recipe_publisher_url' => $recipe['publisher_url'],
                 'api_recipe_social_rank'   => $recipe['social_rank'],
-                'api_recipe_page'          => $request->page
+                'api_recipe_page'          => (int)$request->page
             ];
             $validator = Validator::make($new_api_recipe, apiRecipe::$rules);
             if ($validator->fails()) {
                 Log::error('Load new recipes failed. Recipe failed validation.', [
                     'rId'         => $recipe['recipe_id'],
-                    'page_failed' => $request->page,
+                    'page_failed' => (int)$request->page,
                     'errors'      => $validator->errors()
                 ]);
                 return response()->json([
                     'rId'         => $recipe['recipe_id'],
                     'success'     => 'false',
-                    'page_failed' => $request->page,
+                    'page_failed' => (int)$request->page,
                     'errors'      => $validator->errors()
                 ]);
             }
@@ -90,12 +90,12 @@ class apiController extends Controller
             }
         }
         Log::info('New page of recipes pulled.', [
-            'page_retrieved' => $request->page
+            'page_retrieved' => (int)$request->page
         ]);
 
         return response()->json([
             'success'        => 'true',
-            'page_retrieved' => $request->page
+            'page_retrieved' => (int)$request->page
         ]);
     }
 

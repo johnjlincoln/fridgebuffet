@@ -1,6 +1,7 @@
 <?php
 /**
-* PHP Script to handle getting recipe specific data from the Food2Fork API.
+* TODO: doc comment
+* TODO: Comment Inline
 *
 * @author John J Lincoln <jlincoln88@gmail.com>
 * @copyright 2018 Arctic Pangolin
@@ -108,7 +109,7 @@ if ($errno = curl_errno($ch)) {
         ]);
 }
 
-echo isset($response) ? var_dump($response) : 'Completed successfully';
+echo isset($response) ? var_dump($response) : 'Error - Check data';
 
 // Close the handle and load the response
 curl_close($ch);

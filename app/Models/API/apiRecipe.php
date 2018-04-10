@@ -2,6 +2,7 @@
 
 /**
  * Model for Recipes pulled from the Food2Fork API
+ * TODO: COMMENT NEW FUNCTIONS
  *
  * @author John J Lincoln <jlincoln88@gmail.com>
  * @copyright 2018 Arctic Pangolin
