@@ -21,7 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Route::middleware('auth:api')->get('/get/newRecipes', 'API\apiController@getNewRecipes');
 
 Route::get('/get/pageInfo', 'API\apiController@getPageInfo');
-Route::get('/get/unpulledApiRecipe', 'API\apiController@getUnpulledApiRecipeId');
+Route::get('/get/unloadedApiRecipe', 'API\apiController@getUnloadedApiRecipe');
 
 Route::post('/post/apiRecipeData', 'API\apiController@postApiRecipeData');
 Route::post('/post/apiRecipes', 'API\apiController@postApiRecipes');

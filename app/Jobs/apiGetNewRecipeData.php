@@ -23,7 +23,7 @@ $script_arguments = [
 
 // Configure cURL to request an unpulled apiRecie from the fridgebuffet apiRecipes
 $defaults = [
-    CURLOPT_URL            => $script_arguments['base_url'] . '/api/get/unpulledApiRecipe',
+    CURLOPT_URL            => $script_arguments['base_url'] . '/api/get/unloadedApiRecipe',
     CURLOPT_RETURNTRANSFER => true
 ];
 $ch = curl_init();

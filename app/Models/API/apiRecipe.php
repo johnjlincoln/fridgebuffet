@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Model for Recipes pulled from the Food2Fork API
+ * Model for Recipes retrieved from the Food2Fork API
  *
  * @author John J Lincoln <jlincoln88@gmail.com>
  * @copyright 2018 Arctic Pangolin
@@ -50,7 +50,6 @@ class apiRecipe extends Model
         'api_recipe_publisher_url',
         'api_recipe_social_rank',
         'api_recipe_page',
-        'api_recipe_data_pulled',
         'assigned_recipe_id',
         'date_assigned'
     ];
@@ -93,7 +92,7 @@ class apiRecipe extends Model
     }
 
     /**
-    * Scopes a query to only include apiRecipes that have not had their data pulled.
+    * Scopes a query to only include apiRecipes that have not had their data loaded.
     *
     * @param \Illuminate\Database\Eloquent\Builder $query
     * @return \Illuminate\Database\Eloquent\Builder
