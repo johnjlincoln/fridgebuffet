@@ -1,9 +1,7 @@
 <?php
 
 /**
- * Endpoints for handling data pulls from the Food2Fork API.
- * This is a very opinionated and verbose controller. In this case it's
- * mainly serving as couple of programatic buttons for a cron job to push.
+ * Controller for handling raw API payloads retrieved from Food2Fork.
  *
  * @author John J Lincoln <jlincoln88@gmail.com>
  * @copyright 2018 Arctic Pangolin
@@ -21,70 +19,69 @@ use Validator;
 class apiController extends Controller
 {
     /**
-     * Retrieves a page of recipes from the F2F API, loads them into apiRecipe
-     * models, and saves those models.
+     * Gets the current page in api_raw_api_recipes along with the next page that
+     * needs to be pulled.
      *
      * @return \Illuminate\Http\Response
      */
-    public function getNewRecipes()
+    public function getPageInfo()
     {
-        // Grab a recipe from the last page retrieved to determine the next page to retrieve
-        $recipe_from_last_page = apiRecipe::orderBy('api_recipe_page', 'desc')->first();
-        $api_page = isset($recipe_from_last_page) ? $recipe_from_last_page->api_recipe_page + 1 : 1;
+        $recipe = apiRecipe::orderBy('api_recipe_page', 'desc')->first();
+        $current_page = isset($recipe) ? $recipe->api_recipe_page : 1;
+        $next_page = isset($recipe) ? $recipe->api_recipe_page + 1 : 1;
 
-        // Configure cURL
-        $params = [
-            'key'  => env('F2F_API_KEY'),
-            'page' => $api_page
-        ];
-        $defaults = [
-            CURLOPT_URL            => 'http://food2fork.com/api/search',
-            CURLOPT_POST           => true,
-            CURLOPT_POSTFIELDS     => $params,
-            CURLOPT_RETURNTRANSFER => true
-        ];
-        $ch = curl_init();
-        curl_setopt_array($ch, $defaults);
+        return response()->json([
+            'current_page' => $current_page,
+            'next_page'    => $next_page
+        ]);
+    }
 
-        // Send request
-        $response = curl_exec($ch);
+    /**
+     * Gets the apiRecipe ID and corresponding Food2Fork ID for an apiRecipe that has not been loaded.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getUnpulledApiRecipeId()
+    {
+        $recipe = apiRecipe::dataNotLoaded()->noErrors()->first();
 
-        // Check for errors and display the error message
-        if ($errno = curl_errno($ch)) {
-            $error_message = curl_strerror($errno);
-            return response()->json([
-                'error' => "cURL error ({$errno}):\n {$error_message}"
-                ]);
-        }
+        return response()->json([
+            'api_f2f_id' => $recipe->api_f2f_id,
+            'api_id'     => $recipe->id
+        ]);
+    }
 
-        // Close the handle and load the response
-        curl_close($ch);
-        $response = json_decode($response);
-
-        // Save new models
-        foreach ($response->recipes as $recipe) {
+    /**
+     * Adds a new apiRecipe model for every recipe in the request.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function postApiRecipes(Request $request)
+    {
+        foreach ($request->new_recipes as $recipe) {
             $new_api_recipe = [
-                'api_f2f_id'               => $recipe->recipe_id,
-                'api_recipe_title'         => $recipe->title,
-                'api_recipe_image_url'     => $recipe->image_url,
-                'api_recipe_source_url'    => $recipe->source_url,
-                'api_recipe_f2f_url'       => $recipe->f2f_url,
-                'api_recipe_publisher'     => $recipe->publisher,
-                'api_recipe_publisher_url' => $recipe->publisher_url,
-                'api_recipe_social_rank'   => $recipe->social_rank,
-                'api_recipe_page'          => (int)$api_page
+                'api_f2f_id'               => $recipe['recipe_id'],
+                'api_recipe_title'         => $recipe['title'],
+                'api_recipe_image_url'     => $recipe['image_url'],
+                'api_recipe_source_url'    => $recipe['source_url'],
+                'api_recipe_f2f_url'       => $recipe['f2f_url'],
+                'api_recipe_publisher'     => $recipe['publisher'],
+                'api_recipe_publisher_url' => $recipe['publisher_url'],
+                'api_recipe_social_rank'   => $recipe['social_rank'],
+                'api_recipe_page'          => (int)$request->page
             ];
             $validator = Validator::make($new_api_recipe, apiRecipe::$rules);
             if ($validator->fails()) {
-                Log::error('Get new recipe failed. Validation failed.', [
-                    'rId'         => $recipe->recipe_id,
-                    'page_failed' => $api_page,
+                Log::error('Load new recipes failed. Recipe failed validation.', [
+                    'rId'         => $recipe['recipe_id'],
+                    'page_failed' => (int)$request->page,
                     'errors'      => $validator->errors()
                 ]);
                 return response()->json([
-                    'rId'         => $recipe->recipe_id,
+                    'rId'         => $recipe['recipe_id'],
                     'success'     => 'false',
-                    'page_failed' => $api_page,
+                    'page_failed' => (int)$request->page,
                     'errors'      => $validator->errors()
                 ]);
             }
@@ -92,82 +89,51 @@ class apiController extends Controller
             $api_recipe_model->fill($new_api_recipe);
             $success = $api_recipe_model->save();
             if (!$success) {
-                Log::error('Get new recipe failed. Save failed post validation.', [
-                    'rId'    => $recipe->api_f2f_id,
-                    'api_id' => $recipe->id,
+                Log::error('Load new recipes failed. Save failed post validation.', [
+                    'rId'    => $recipe['recipe_id'],
                     'errors' => $validator->errors()
                 ]);
                 return response()->json([
-                    'rId'     => $recipe->recipe_id,
+                    'rId'     => $recipe['recipe_id'],
                     'success' => 'false',
                     'errors'  => $validator->errors()
                 ]);
             }
         }
         Log::info('New page of recipes pulled.', [
-            'page_retrieved' => $api_page
+            'page_retrieved' => (int)$request->page
         ]);
+
         return response()->json([
             'success'        => 'true',
-            'page_retrieved' => $api_page
+            'page_retrieved' => (int)$request->page
         ]);
     }
 
     /**
-     * Retrieves data for an apiRecipe from the F2F API, loads the data into apiRecipeData
-     * models, and saves those models. This function loads apiRecipeData models for the
-     * first apiRecipe that has not had its data pulled.
+     * Adds new apiRecipeData models for an apiRecipe.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function getRecipeData()
+    public function postApiRecipeData(Request $request)
     {
-        // Grab any apiRecipe that has not had its data pulled
-        $recipe = apiRecipe::dataNotPulled()->first();
-
-        // Configure cURL
-        $params = [
-            'key' => env('F2F_API_KEY'),
-            'rId' => $recipe->api_f2f_id
-        ];
-        $defaults = [
-            CURLOPT_URL            => 'http://food2fork.com/api/get',
-            CURLOPT_POST           => true,
-            CURLOPT_POSTFIELDS     => $params,
-            CURLOPT_RETURNTRANSFER => true
-        ];
-        $ch = curl_init();
-        curl_setopt_array($ch, $defaults);
-
-        // Send request
-        $response = curl_exec($ch);
-
-        // Check for errors and display the error message
-        if ($errno = curl_errno($ch)) {
-            $error_message = curl_strerror($errno);
-            return response()->json([
-                'error' => "cURL error ({$errno}):\n {$error_message}"
-                ]);
-        }
-
-        // Close the handle and load the response
-        curl_close($ch);
-        $response = json_decode($response);
-
-        // Save new models
-        foreach ($response->recipe->ingredients as $ingredient) {
+        $recipe = apiRecipe::find($request->api_id);
+        foreach ($request->ingredients as $ingredient) {
             $new_api_recipe_data = [
-                'api_id'              => $recipe->id,
+                'api_id'              => $request->api_id,
                 'api_f2f_id'          => $recipe->api_f2f_id,
                 'api_ingredient_data' => isset($ingredient) ? $ingredient : 'not found'
             ];
             $validator = Validator::make($new_api_recipe_data, apiRecipeData::$rules);
             if ($validator->fails()) {
-                Log::error('Pull failed for rId. Validation failed.', [
+                Log::error('Load failed for rId. Validation failed.', [
                     'rId'    => $recipe->api_f2f_id,
                     'api_id' => $recipe->id,
                     'errors' => $validator->errors()
                 ]);
+                $recipe->markRecipeHasErrors();
+                $recipe->save();
                 return response()->json([
                     'rId'     => $recipe->api_f2f_id,
                     'success' => 'false',
@@ -178,7 +144,7 @@ class apiController extends Controller
             $api_recipe_data_model->fill($new_api_recipe_data);
             $success = $api_recipe_data_model->save();
             if (!$success) {
-                Log::error('Pull failed for rId. Save failed post validation.', [
+                Log::error('Load failed for rId. Save failed post validation.', [
                     'rId'    => $recipe->api_f2f_id,
                     'api_id' => $recipe->id,
                     'errors' => $validator->errors()
@@ -190,16 +156,15 @@ class apiController extends Controller
                 ]);
             }
         }
-
-        // Mark the apiRecipe as having its data pulled
-        $recipe->markRecipeDataPulled();
+        $recipe->markRecipeDataLoaded();
         $success = $recipe->save();
-        Log::info('Recipe pulled.', [
+        Log::info('Recipe loaded.', [
             'rId' => $recipe->api_f2f_id
         ]);
+
         return response()->json([
             'success' => $success,
-            'string'  => $success ? 'Recipe ' . $recipe->api_f2f_id . ' pulled!' : 'Pull failed on recipe ' . $recipe->api_f2f_id
+            'string'  => $success ? 'Recipe ' . $recipe->api_f2f_id . ' loaded!' : 'Load failed on recipe ' . $recipe->api_f2f_id
             ]);
     }
 }
