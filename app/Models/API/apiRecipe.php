@@ -2,7 +2,6 @@
 
 /**
  * Model for Recipes pulled from the Food2Fork API
- * TODO: COMMENT NEW FUNCTIONS
  *
  * @author John J Lincoln <jlincoln88@gmail.com>
  * @copyright 2018 Arctic Pangolin
@@ -85,22 +84,31 @@ class apiRecipe extends Model
         'api_recipe_page'          => 'numeric'
     ];
 
+    /**
+     * The apiRecipeData models that belong to this apiRecipe.
+     */
     public function apiRecipeData()
     {
-        return $this->hasMany('App\Models\API\apiRecipeData');
+        return $this->hasMany('App\Models\API\apiRecipeData', 'api_id');
     }
 
     /**
-    * Scopes a query to only include recipes that have not had their data pulled.
+    * Scopes a query to only include apiRecipes that have not had their data pulled.
     *
     * @param \Illuminate\Database\Eloquent\Builder $query
     * @return \Illuminate\Database\Eloquent\Builder
     */
-    public function scopeDataNotPulled($query)
+    public function scopeDataNotLoaded($query)
     {
         return $query->where('api_recipe_data_loaded', false);
     }
 
+    /**
+     * Scopes a query to only include apiRecipes that have errors.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function scopeNoErrors($query)
     {
         return $query->where('api_recipe_has_errors', false);
@@ -117,6 +125,11 @@ class apiRecipe extends Model
         return $this->api_recipe_data_loaded = true;
     }
 
+    /**
+     * Marks the current apiRecipe as riddled with errors. Womp womp.
+     *
+     * @return bool
+     */
     public function markRecipeHasErrors()
     {
         return $this->api_recipe_has_errors = true;

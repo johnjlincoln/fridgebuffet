@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TODO: doc comment
+ * Controller for handling raw API payloads retrieved from Food2Fork.
  *
  * @author John J Lincoln <jlincoln88@gmail.com>
  * @copyright 2018 Arctic Pangolin
@@ -36,9 +36,14 @@ class apiController extends Controller
         ]);
     }
 
+    /**
+     * Gets the apiRecipe ID and corresponding Food2Fork ID for an apiRecipe that has not been loaded.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function getUnpulledApiRecipeId()
     {
-        $recipe = apiRecipe::dataNotPulled()->noErrors()->first();
+        $recipe = apiRecipe::dataNotLoaded()->noErrors()->first();
 
         return response()->json([
             'api_f2f_id' => $recipe->api_f2f_id,
@@ -46,6 +51,12 @@ class apiController extends Controller
         ]);
     }
 
+    /**
+     * Adds a new apiRecipe model for every recipe in the request.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function postApiRecipes(Request $request)
     {
         foreach ($request->new_recipes as $recipe) {
@@ -100,7 +111,8 @@ class apiController extends Controller
     }
 
     /**
-     * [postApiRecipeData description]
+     * Adds new apiRecipeData models for an apiRecipe.
+     *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
@@ -144,7 +156,6 @@ class apiController extends Controller
                 ]);
             }
         }
-        // Mark the apiRecipe as having its data pulled
         $recipe->markRecipeDataLoaded();
         $success = $recipe->save();
         Log::info('Recipe loaded.', [
