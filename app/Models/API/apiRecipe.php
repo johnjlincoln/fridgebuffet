@@ -85,32 +85,53 @@ class apiRecipe extends Model
     ];
 
     /**
-    * Get the apiRecipeData that belongs to this apiRecipe.
-    */
+     * The apiRecipeData models that belong to this apiRecipe.
+     */
     public function apiRecipeData()
     {
-        return $this->hasMany('App\Models\API\apiRecipeData');
+        return $this->hasMany('App\Models\API\apiRecipeData', 'api_id');
     }
 
     /**
-    * Scopes a query to only include recipes that have not had their data pulled.
+    * Scopes a query to only include apiRecipes that have not had their data pulled.
     *
     * @param \Illuminate\Database\Eloquent\Builder $query
     * @return \Illuminate\Database\Eloquent\Builder
     */
-    public function scopeDataNotPulled($query)
+    public function scopeDataNotLoaded($query)
     {
-        return $query->where('api_recipe_data_pulled', false);
+        return $query->where('api_recipe_data_loaded', false);
     }
 
     /**
-     * Marks the current apiRecipe as "pulled" indicating that its apiRecipeData model(s)
-     * have been pulled from the F2F API.
+     * Scopes a query to only include apiRecipes that have errors.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeNoErrors($query)
+    {
+        return $query->where('api_recipe_has_errors', false);
+    }
+
+    /**
+     * Marks the current apiRecipe as "loaded" indicating that its apiRecipeData model(s)
+     * have been pulled from the F2F API and successfully loaded.
      *
      * @return bool
      */
-    public function markRecipeDataPulled()
+    public function markRecipeDataLoaded()
     {
-        return $this->api_recipe_data_pulled = true;
+        return $this->api_recipe_data_loaded = true;
+    }
+
+    /**
+     * Marks the current apiRecipe as riddled with errors. Womp womp.
+     *
+     * @return bool
+     */
+    public function markRecipeHasErrors()
+    {
+        return $this->api_recipe_has_errors = true;
     }
 }

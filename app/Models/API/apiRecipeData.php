@@ -73,6 +73,6 @@ class apiRecipeData extends Model
     */
     public function apiRecipe()
     {
-        return $this->belongsTo('App\Models\API\apiRecipe');
+        return $this->belongsTo('App\Models\API\apiRecipe', 'api_id');
     }
 }
