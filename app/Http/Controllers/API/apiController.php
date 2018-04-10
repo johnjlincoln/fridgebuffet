@@ -203,6 +203,12 @@ class apiController extends Controller
             ]);
     }
 
+    /**
+     * Gets the current page in api_raw_api_recipes along with the next page that
+     * needs to be pulled.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function getPageInfo()
     {
         $recipe = apiRecipe::orderBy('api_recipe_page', 'desc')->first();
@@ -215,6 +221,11 @@ class apiController extends Controller
         ]);
     }
 
+    /**
+     * Gets an unpulled apiRecipe from api_raw_api_recipes and returns its ID on F2f (rId).
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function getUnpulledApiRecipeId()
     {
         $recipe = apiRecipe::dataNotPulled()->first();
