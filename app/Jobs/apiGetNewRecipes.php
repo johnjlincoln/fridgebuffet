@@ -1,6 +1,7 @@
 <?php
 /**
 * PHP Script to handle getting new recipes from the Food2Fork API.
+* TODO: comment inline
 *
 * @author John J Lincoln <jlincoln88@gmail.com>
 * @copyright 2018 Arctic Pangolin

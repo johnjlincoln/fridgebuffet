@@ -84,9 +84,6 @@ class apiRecipe extends Model
         'api_recipe_page'          => 'numeric'
     ];
 
-    /**
-    * Get the apiRecipeData that belongs to this apiRecipe.
-    */
     public function apiRecipeData()
     {
         return $this->hasMany('App\Models\API\apiRecipeData');
@@ -100,17 +97,27 @@ class apiRecipe extends Model
     */
     public function scopeDataNotPulled($query)
     {
-        return $query->where('api_recipe_data_pulled', false);
+        return $query->where('api_recipe_data_loaded', false);
+    }
+
+    public function scopeNoErrors($query)
+    {
+        return $query->where('api_recipe_has_errors', false);
     }
 
     /**
-     * Marks the current apiRecipe as "pulled" indicating that its apiRecipeData model(s)
-     * have been pulled from the F2F API.
+     * Marks the current apiRecipe as "loaded" indicating that its apiRecipeData model(s)
+     * have been pulled from the F2F API and successfully loaded.
      *
      * @return bool
      */
-    public function markRecipeDataPulled()
+    public function markRecipeDataLoaded()
     {
-        return $this->api_recipe_data_pulled = true;
+        return $this->api_recipe_data_loaded = true;
+    }
+
+    public function markRecipeHasErrors()
+    {
+        return $this->api_recipe_has_errors = true;
     }
 }
