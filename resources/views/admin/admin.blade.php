@@ -10,7 +10,7 @@
     </head>
     <body>
     <h2 style="text-align: center"> Laravel and React application </h2>
-        <div id="admin_main"></div>
+        <div id="admin_container"></div>
         <script src="{{mix('js/app.js')}}" ></script>
     </body>
 </html>
