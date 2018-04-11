@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import AdminMain from '/AdminMain';
+import AdminMain from './AdminMain';
 
 class AdminContainer extends Component {
     static propTypes = {
