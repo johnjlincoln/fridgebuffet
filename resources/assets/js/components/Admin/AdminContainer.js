@@ -26,14 +26,23 @@ class AdminContainer extends Component {
     render () {
         return (
             <div>
-                <AdminMain />
-            </div>
-        )
+                <Grid
+                    columnCount={1}
+                    columnWidth={100}
+                    height={300}
+                    rowCount={1}
+                    rowHeight={30}
+                    width={300}
+                    >
+                        <AdminMain />
+                    </Grid>
+                </div>
+            )
+        }
     }
-}
 
-export default AdminContainer;
+    export default AdminContainer;
 
-if (document.getElementById('admin_container')) {
-    ReactDOM.render(<AdminContainer />, document.getElementById('admin_container'));
-}
+    if (document.getElementById('admin_container')) {
+        ReactDOM.render(<AdminContainer />, document.getElementById('admin_container'));
+    }
