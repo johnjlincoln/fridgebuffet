@@ -3,6 +3,26 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 class AdminMain extends Component {
+    static propTypes = {
+        recentlyLoadedRecipes: PropTypes.object,
+        lastRecipePageLoaded: PropTypes.number,
+        nextRecipePageToLoad: PropTypes.number,
+        lastRecipeLoaded: PropTypes.string,
+        nextRecipeToLoad: PropTypes.string,
+    };
+
+    static defaultProps = {
+        recentlyLoadedRecipes: {},
+        lastRecipePageLoaded: null,
+        nextRecipePageToLoad: null,
+        lastRecipeLoaded: null,
+        nextRecipeToLoad: null,
+    };
+
+    state = {
+        // this component should be stateless
+    };
+
     handleTest = (e) => {
         console.log('test');
     };

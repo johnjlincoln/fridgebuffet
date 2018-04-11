@@ -4,45 +4,42 @@ import PropTypes from 'prop-types';
 import AdminMain from './AdminMain';
 
 class AdminContainer extends Component {
-    static propTypes = {
-        test: PropTypes.string
-    };
-
-    static defaultProps = {
-        test: 'string'
-    };
-
     state = {
-        test: this.props.test,
-        lastRecipePage: 0,
-        nextRecipePage: 0,
-        nextRecipeId: 0
+        recentlyLoadedRecipes: {},
+        lastRecipePageLoaded: null,
+        nextRecipePageToLoad: null,
+        lastRecipeLoaded: null,
+        nextRecipeToLoad: null,
     };
 
-    handleTest = (e) => {
-        console.log('test');
+
+    handleGetInitialState = () => {
+        // fetch from backend
+    };
+
+    handleGetNewRecipe = () => {
+        // trigger job
+    };
+
+    handleGetNewRecipePage = () => {
+        // trigger job
+    };
+
+    componentDidMount() {
+        this.handleGetInitialState;
     };
 
     render () {
         return (
             <div>
-                <Grid
-                    columnCount={1}
-                    columnWidth={100}
-                    height={300}
-                    rowCount={1}
-                    rowHeight={30}
-                    width={300}
-                    >
-                        <AdminMain />
-                    </Grid>
-                </div>
-            )
-        }
+                <AdminMain />
+            </div>
+        )
     }
+}
 
-    export default AdminContainer;
+export default AdminContainer;
 
-    if (document.getElementById('admin_container')) {
-        ReactDOM.render(<AdminContainer />, document.getElementById('admin_container'));
-    }
+if (document.getElementById('admin_container')) {
+    ReactDOM.render(<AdminContainer />, document.getElementById('admin_container'));
+}
