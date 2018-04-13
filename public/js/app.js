@@ -14152,14 +14152,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+var test = function test() {
+    console.log('flerp');
+};
+
 var AdminDisplay = function AdminDisplay(props) {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        null,
+        { className: 'container' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'button',
-            { onClick: props.handleTest },
-            'Activate Lasers'
+            'div',
+            { className: 'row justify-content-center' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'col-md-8' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'card' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'card-header' },
+                        'Admin Dashboard'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'card-body' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            { onClick: test },
+                            'Activate Lasers'
+                        )
+                    )
+                )
+            )
         )
     );
 };
@@ -55602,7 +55627,10 @@ var AdminContainer = function (_Component) {
             lastRecipePageLoaded: null,
             nextRecipePageToLoad: null,
             lastRecipeLoaded: null,
-            nextRecipeToLoad: null
+            nextRecipeToLoad: null,
+            errorCount: 0,
+            apiCallsMade: 0,
+            apiCallsRemaining: 0
         }, _this.handleTest = function () {
             console.log('pew pew');
         }, _this.handleGetInitialState = function () {
