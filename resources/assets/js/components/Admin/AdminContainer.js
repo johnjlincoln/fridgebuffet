@@ -12,6 +12,9 @@ class AdminContainer extends Component {
         nextRecipeToLoad: null,
     };
 
+    handleTest = () => {
+        console.log('pew pew');
+    };
 
     handleGetInitialState = () => {
         // fetch from backend
@@ -32,7 +35,9 @@ class AdminContainer extends Component {
     render () {
         return (
             <div>
-                <AdminMain />
+                <AdminMain
+                    handleTest={this.handleTest}
+                />
             </div>
         )
     }
