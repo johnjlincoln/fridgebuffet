@@ -20,7 +20,7 @@ class apiController extends Controller
 {
     /**
      * Gets the current page in api_raw_api_recipes along with the next page that
-     * needs to be pulled.
+     * needs to be loaded.
      *
      * @return \Illuminate\Http\Response
      */
@@ -41,7 +41,7 @@ class apiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getUnpulledApiRecipeId()
+    public function getUnloadedApiRecipe()
     {
         $recipe = apiRecipe::dataNotLoaded()->noErrors()->first();
 
@@ -100,7 +100,7 @@ class apiController extends Controller
                 ]);
             }
         }
-        Log::info('New page of recipes pulled.', [
+        Log::info('New page of recipes loaded.', [
             'page_retrieved' => (int)$request->page
         ]);
 
