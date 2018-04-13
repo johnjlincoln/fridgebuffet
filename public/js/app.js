@@ -14152,7 +14152,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var AdminMain = function AdminMain(props) {
+var AdminDisplay = function AdminDisplay(props) {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
@@ -14164,15 +14164,15 @@ var AdminMain = function AdminMain(props) {
     );
 };
 
-AdminMain.propTypes = {
+AdminDisplay.propTypes = {
     handleTest: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func
 };
 
-AdminMain.defaultProps = {
+AdminDisplay.defaultProps = {
     //
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (AdminMain);
+/* harmony default export */ __webpack_exports__["default"] = (AdminDisplay);
 
 /***/ }),
 /* 21 */
@@ -55569,7 +55569,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__AdminMain__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__AdminDisplay__ = __webpack_require__(20);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -55625,7 +55625,7 @@ var AdminContainer = function (_Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__AdminMain__["default"], {
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__AdminDisplay__["default"], {
                     handleTest: this.handleTest
                 })
             );

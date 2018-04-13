@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import AdminMain from './AdminMain';
+import AdminDisplay from './AdminDisplay';
 
 class AdminContainer extends Component {
     state = {
@@ -35,7 +35,7 @@ class AdminContainer extends Component {
     render () {
         return (
             <div>
-                <AdminMain
+                <AdminDisplay
                     handleTest={this.handleTest}
                 />
             </div>

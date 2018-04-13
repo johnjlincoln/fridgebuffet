@@ -1,18 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 
-const AdminMain = props => (
+const AdminDisplay = props => (
     <div>
         <button onClick={props.handleTest}>Activate Lasers</button>
     </div>
 )
 
-AdminMain.propTypes = {
+AdminDisplay.propTypes = {
     handleTest: PropTypes.func
 }
 
-AdminMain.defaultProps = {
+AdminDisplay.defaultProps = {
     //
 };
 
-export default AdminMain;
+export default AdminDisplay;
