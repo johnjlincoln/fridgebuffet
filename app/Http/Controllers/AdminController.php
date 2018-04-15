@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Home Controller
+ * Admin Controller
  *
  * @author John J Lincoln <jlincoln88@gmail.com>
  * @copyright 2018 Arctic Pangolin
@@ -11,12 +11,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class AdminController extends Controller
 {
     /**
-     * Creates a new controller instance.
-     *
-     * @return void
+     * Constructor
      */
     public function __construct()
     {
@@ -24,12 +22,12 @@ class HomeController extends Controller
     }
 
     /**
-     * Shows the application dashboard.
+     * Shows the Admin home page.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function home()
     {
-        return view('home');
+        return view('admin/admin');
     }
 }

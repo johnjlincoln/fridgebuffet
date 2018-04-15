@@ -19,7 +19,7 @@ use Validator;
 class apiController extends Controller
 {
     /**
-     * Gets the current page in api_raw_api_recipes along with the next page that
+     * Gets the current page in api_raw_api_recipes along with the next page that.
      * needs to be loaded.
      *
      * @return \Illuminate\Http\Response

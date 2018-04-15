@@ -5,18 +5,18 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-/**
- * User Type Constants
- *
- * @var string
- */
-const ADMIN_TYPE= 'admin';
-const REGISTERED_TYPE = 'registered';
-
 class User extends Authenticatable
 {
     use Notifiable;
 
+    /**
+    * User Type Constants
+    *
+    * @var string
+    */
+    const ADMIN_TYPE = 'admin';
+    const REGISTERED_TYPE = 'registered';
+    
     /**
      * The attributes that are mass assignable.
      *
