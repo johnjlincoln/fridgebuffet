@@ -10,6 +10,9 @@ class AdminContainer extends Component {
         nextRecipePageToLoad: null,
         lastRecipeLoaded: null,
         nextRecipeToLoad: null,
+        errorCount: 0,
+        apiCallsMade: 0,
+        apiCallsRemaining: 0
     };
 
     handleTest = () => {
