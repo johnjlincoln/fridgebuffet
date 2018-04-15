@@ -14,7 +14,9 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     /**
-     * Constructor
+     * Creates a new controller instance.
+     *
+     * @return void
      */
     public function __construct()
     {

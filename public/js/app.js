@@ -14153,7 +14153,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 var test = function test() {
-    console.log('flerp');
+    console.log('pew pew');
 };
 
 var AdminDisplay = function AdminDisplay(props) {
