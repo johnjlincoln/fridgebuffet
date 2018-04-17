@@ -26,18 +26,18 @@ const AdminDisplay = props => {
     )
 }
 
-// AdminDisplay.propTypes = {
-//     apiRecipesLoaded: PropTypes.number,
-//     apiRecipesNotLoaded: PropTypes.number,
-//     lastApiRecipeLoaded: PropTypes.string,
-//     nextApiRecipeToLoad: PropTypes.string
-// };
-//
-// AdminDisplay.defaultProps = {
-//     // apiRecipesLoaded: 0,
-//     // apiRecipesNotLoaded: 0,
-//     // lastApiRecipeLoaded: '',
-//     // nextApiRecipeToLoad: ''
-// };
+AdminDisplay.propTypes = {
+    apiRecipesLoaded: PropTypes.number,
+    apiRecipesNotLoaded: PropTypes.number,
+    lastApiRecipeLoaded: PropTypes.string,
+    nextApiRecipeToLoad: PropTypes.string
+};
+
+AdminDisplay.defaultProps = {
+    apiRecipesLoaded: 0,
+    apiRecipesNotLoaded: 0,
+    lastApiRecipeLoaded: '',
+    nextApiRecipeToLoad: ''
+};
 
 export default AdminDisplay;

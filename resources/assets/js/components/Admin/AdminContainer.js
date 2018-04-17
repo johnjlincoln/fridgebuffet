@@ -2,29 +2,23 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import AdminDisplay from './AdminDisplay';
+import AdminAjaxService from './AdminAjaxService';
 
 class AdminContainer extends Component {
-    static propTypes = {
-        apiRecipesLoaded: PropTypes.number,
-        apiRecipesNotLoaded: PropTypes.number,
-        lastApiRecipeLoaded: PropTypes.string,
-        nextApiRecipeToLoad: PropTypes.string
-    };
-
     state = {
-        //
+        apiRecipesLoaded: 0,
+        apiRecipesNotLoaded: 0,
+        lastApiRecipeLoaded: '',
+        nextApiRecipeToLoad: '',
+        renderDisplay: false
     };
 
     componentDidMount() {
-        this.setState({apiRecipesLoaded: this.props.apiRecipesLoaded})
+        this.handleGetInitialState();
     }
 
-    handleTest = () => {
-        console.log('pew pew');
-    };
-
     handleGetInitialState = () => {
-        // fetch from backend
+        // AdminAjaxService.getApiRecipeData
     };
 
     handleGetNewRecipe = () => {
@@ -39,9 +33,14 @@ class AdminContainer extends Component {
     render () {
         return (
             <div>
-                <AdminDisplay
-                    apiRecipesLoaded={this.state.apiRecipesLoaded}
-                />
+                {this.state.renderDisplay &&
+                    <AdminDisplay
+                        apiRecipesLoaded={this.state.apiRecipesLoaded}
+                        apiRecipesNotLoaded={this.state.apiRecipesNotLoaded}
+                        lastApiRecipeLoaded={this.state.lastApiRecipeLoaded}
+                        nextApiRecipeToLoad={this.state.nextApiRecipeToLoad}
+                    />
+                }
             </div>
         )
     }
@@ -51,6 +50,5 @@ export default AdminContainer;
 
 if (document.getElementById('admin_container')) {
     const element = document.getElementById('admin_container');
-    const props = Object.assign({}, element.dataset);
-    ReactDOM.render(<AdminContainer {...props}/>, element);
+    ReactDOM.render(<AdminContainer/>, element);
 }

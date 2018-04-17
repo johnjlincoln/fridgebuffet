@@ -14199,19 +14199,19 @@ var AdminDisplay = function AdminDisplay(props) {
     );
 };
 
-// AdminDisplay.propTypes = {
-//     apiRecipesLoaded: PropTypes.number,
-//     apiRecipesNotLoaded: PropTypes.number,
-//     lastApiRecipeLoaded: PropTypes.string,
-//     nextApiRecipeToLoad: PropTypes.string
-// };
-//
-// AdminDisplay.defaultProps = {
-//     // apiRecipesLoaded: 0,
-//     // apiRecipesNotLoaded: 0,
-//     // lastApiRecipeLoaded: '',
-//     // nextApiRecipeToLoad: ''
-// };
+AdminDisplay.propTypes = {
+    apiRecipesLoaded: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.number,
+    apiRecipesNotLoaded: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.number,
+    lastApiRecipeLoaded: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
+    nextApiRecipeToLoad: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string
+};
+
+AdminDisplay.defaultProps = {
+    apiRecipesLoaded: 0,
+    apiRecipesNotLoaded: 0,
+    lastApiRecipeLoaded: '',
+    nextApiRecipeToLoad: ''
+};
 
 /* harmony default export */ __webpack_exports__["default"] = (AdminDisplay);
 
@@ -55613,6 +55613,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__AdminDisplay__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__AdminAjaxService__ = __webpack_require__(68);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -55620,6 +55621,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -55641,11 +55643,13 @@ var AdminContainer = function (_Component) {
         }
 
         return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AdminContainer.__proto__ || Object.getPrototypeOf(AdminContainer)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-            //
-        }, _this.handleTest = function () {
-            console.log('pew pew');
+            apiRecipesLoaded: 0,
+            apiRecipesNotLoaded: 0,
+            lastApiRecipeLoaded: '',
+            nextApiRecipeToLoad: '',
+            renderDisplay: false
         }, _this.handleGetInitialState = function () {
-            // fetch from backend
+            // AdminAjaxService.getApiRecipeData
         }, _this.handleGetNewRecipe = function () {
             // trigger job
         }, _this.handleGetNewRecipePage = function () {
@@ -55656,7 +55660,7 @@ var AdminContainer = function (_Component) {
     _createClass(AdminContainer, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            this.setState({ apiRecipesLoaded: this.props.apiRecipesLoaded });
+            this.handleGetInitialState();
         }
     }, {
         key: 'render',
@@ -55664,8 +55668,11 @@ var AdminContainer = function (_Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__AdminDisplay__["default"], {
-                    apiRecipesLoaded: this.state.apiRecipesLoaded
+                this.state.renderDisplay && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__AdminDisplay__["default"], {
+                    apiRecipesLoaded: this.state.apiRecipesLoaded,
+                    apiRecipesNotLoaded: this.state.apiRecipesNotLoaded,
+                    lastApiRecipeLoaded: this.state.lastApiRecipeLoaded,
+                    nextApiRecipeToLoad: this.state.nextApiRecipeToLoad
                 })
             );
         }
@@ -55674,20 +55681,11 @@ var AdminContainer = function (_Component) {
     return AdminContainer;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-AdminContainer.propTypes = {
-    apiRecipesLoaded: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.number,
-    apiRecipesNotLoaded: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.number,
-    lastApiRecipeLoaded: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.string,
-    nextApiRecipeToLoad: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.string
-};
-
-
 /* harmony default export */ __webpack_exports__["default"] = (AdminContainer);
 
 if (document.getElementById('admin_container')) {
     var element = document.getElementById('admin_container');
-    var props = Object.assign({}, element.dataset);
-    __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(AdminContainer, props), element);
+    __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(AdminContainer, null), element);
 }
 
 /***/ }),
@@ -55695,6 +55693,32 @@ if (document.getElementById('admin_container')) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
+
+
+
+var getApiRecipeData = function getApiRecipeData() {
+    // fetch
+};
+
+var AdminAjaxService = {
+    getApiRecipeData: getApiRecipeData
+};
+
+/* unused harmony default export */ var _unused_webpack_default_export = (AdminAjaxService);
 
 /***/ })
 /******/ ]);
