@@ -14206,6 +14206,16 @@ var AdminDisplay = function AdminDisplay(props) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'card-header' },
+                        'API Recipes Not Loaded: Errored'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'card-body' },
+                        props.apiRecipesErrored
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'card-header' },
                         'Last API Recipe Loaded:'
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -14232,6 +14242,7 @@ var AdminDisplay = function AdminDisplay(props) {
 AdminDisplay.propTypes = {
     apiRecipesLoaded: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.number,
     apiRecipesNotLoaded: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.number,
+    apiRecipesErrored: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.number,
     lastApiRecipeLoaded: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
     nextApiRecipeToLoad: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string
 };
@@ -14239,6 +14250,7 @@ AdminDisplay.propTypes = {
 AdminDisplay.defaultProps = {
     apiRecipesLoaded: 0,
     apiRecipesNotLoaded: 0,
+    apiRecipesErrored: 0,
     lastApiRecipeLoaded: '',
     nextApiRecipeToLoad: ''
 };
@@ -55677,6 +55689,7 @@ var AdminContainer = function (_Component) {
         return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AdminContainer.__proto__ || Object.getPrototypeOf(AdminContainer)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
             apiRecipesLoaded: 0,
             apiRecipesNotLoaded: 0,
+            apiRecipesErrored: 0,
             lastApiRecipeLoaded: '',
             nextApiRecipeToLoad: '',
             renderDisplay: false
@@ -55712,6 +55725,7 @@ var AdminContainer = function (_Component) {
                 this.state.renderDisplay && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__AdminDisplay__["default"], {
                     apiRecipesLoaded: this.state.apiRecipesLoaded,
                     apiRecipesNotLoaded: this.state.apiRecipesNotLoaded,
+                    apiRecipesErrored: this.state.apiRecipesErrored,
                     lastApiRecipeLoaded: this.state.lastApiRecipeLoaded,
                     nextApiRecipeToLoad: this.state.nextApiRecipeToLoad
                 })

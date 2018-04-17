@@ -23,6 +23,10 @@ const AdminDisplay = props => {
                         <div className="card-body">
                             {props.apiRecipesNotLoaded}
                         </div>
+                        <div className="card-header">API Recipes Not Loaded: Errored</div>
+                        <div className="card-body">
+                            {props.apiRecipesErrored}
+                        </div>
                         <div className="card-header">Last API Recipe Loaded:</div>
                         <div className="card-body">
                             {props.lastApiRecipeLoaded}
@@ -41,6 +45,7 @@ const AdminDisplay = props => {
 AdminDisplay.propTypes = {
     apiRecipesLoaded: PropTypes.number,
     apiRecipesNotLoaded: PropTypes.number,
+    apiRecipesErrored: PropTypes.number,
     lastApiRecipeLoaded: PropTypes.string,
     nextApiRecipeToLoad: PropTypes.string
 };
@@ -48,6 +53,7 @@ AdminDisplay.propTypes = {
 AdminDisplay.defaultProps = {
     apiRecipesLoaded: 0,
     apiRecipesNotLoaded: 0,
+    apiRecipesErrored: 0,
     lastApiRecipeLoaded: '',
     nextApiRecipeToLoad: ''
 };

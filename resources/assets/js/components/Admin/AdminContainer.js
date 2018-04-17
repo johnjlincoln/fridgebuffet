@@ -8,6 +8,7 @@ class AdminContainer extends Component {
     state = {
         apiRecipesLoaded: 0,
         apiRecipesNotLoaded: 0,
+        apiRecipesErrored: 0,
         lastApiRecipeLoaded: '',
         nextApiRecipeToLoad: '',
         renderDisplay: false
@@ -47,6 +48,7 @@ class AdminContainer extends Component {
                     <AdminDisplay
                         apiRecipesLoaded={this.state.apiRecipesLoaded}
                         apiRecipesNotLoaded={this.state.apiRecipesNotLoaded}
+                        apiRecipesErrored={this.state.apiRecipesErrored}
                         lastApiRecipeLoaded={this.state.lastApiRecipeLoaded}
                         nextApiRecipeToLoad={this.state.nextApiRecipeToLoad}
                     />
