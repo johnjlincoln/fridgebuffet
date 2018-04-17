@@ -51,6 +51,12 @@ class apiController extends Controller
         ]);
     }
 
+    /**
+     * Gets some general data regarding the health of the api.
+     * TODO: document this better and build it out
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function getApiHealthData()
     {
         $api_recipes_loaded = apiRecipe::where('api_recipe_data_loaded', 1)->count();
@@ -59,9 +65,9 @@ class apiController extends Controller
         $next_api_recipe_to_load = apiRecipe::where('api_recipe_data_loaded', 0)->oldest()->first();
 
         return response()->json([
-            'apiRecipesLoaded'      => $api_recipes_loaded,
-            'apiRecipesNotLoaded'  => $api_recipes_not_loaded,
-            'lastApiRecipeLoaded'  => $last_api_recipe_loaded->api_recipe_title,
+            'apiRecipesLoaded'    => $api_recipes_loaded,
+            'apiRecipesNotLoaded' => $api_recipes_not_loaded,
+            'lastApiRecipeLoaded' => $last_api_recipe_loaded->api_recipe_title,
             'nextApiRecipeToLoad' => $next_api_recipe_to_load->api_recipe_title
         ]);
     }
