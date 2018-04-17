@@ -11,7 +11,10 @@
     </head>
     <body>
     <h2 style="text-align: center"> Home </h2>
-        <div id="home"></div>
+        <div id="home"
+            data-test={{ time() }}
+        >
+        </div>
         <script src="{{mix('js/app.js')}}" ></script>
     </body>
 </html>

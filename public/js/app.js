@@ -14178,10 +14178,20 @@ var AdminDisplay = function AdminDisplay(props) {
                         'div',
                         { className: 'card-body' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'button',
-                            { onClick: test },
-                            'Activate Lasers'
+                            'p',
+                            null,
+                            'This is a temporary dashboard for monitoring the health of the F2F API.'
                         )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'card-header' },
+                        'API Recipes Loaded: Total'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'card-body' },
+                        props.apiRecipesLoaded
                     )
                 )
             )
@@ -14189,13 +14199,19 @@ var AdminDisplay = function AdminDisplay(props) {
     );
 };
 
-AdminDisplay.propTypes = {
-    handleTest: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func
-};
-
-AdminDisplay.defaultProps = {
-    //
-};
+// AdminDisplay.propTypes = {
+//     apiRecipesLoaded: PropTypes.number,
+//     apiRecipesNotLoaded: PropTypes.number,
+//     lastApiRecipeLoaded: PropTypes.string,
+//     nextApiRecipeToLoad: PropTypes.string
+// };
+//
+// AdminDisplay.defaultProps = {
+//     // apiRecipesLoaded: 0,
+//     // apiRecipesNotLoaded: 0,
+//     // lastApiRecipeLoaded: '',
+//     // nextApiRecipeToLoad: ''
+// };
 
 /* harmony default export */ __webpack_exports__["default"] = (AdminDisplay);
 
@@ -55022,15 +55038,17 @@ var Home = function (_Component) {
 /* harmony default export */ __webpack_exports__["default"] = (Home);
 
 Home.propTypes = {
-    test: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.string
+    test: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.string.isRequired
 };
 
-Home.defaultProps = {
-    test: 'Hellosh'
-};
+// Home.defaultProps = {
+//     test: 'Hellosh'
+// };
 
 if (document.getElementById('home')) {
-    __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Home, null), document.getElementById('home'));
+    var e = document.getElementById('home');
+    var props = Object.assign({}, e.dataset);
+    __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Home, props), e);
 }
 
 /***/ }),
@@ -55623,14 +55641,7 @@ var AdminContainer = function (_Component) {
         }
 
         return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AdminContainer.__proto__ || Object.getPrototypeOf(AdminContainer)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-            recentlyLoadedRecipes: {},
-            lastRecipePageLoaded: null,
-            nextRecipePageToLoad: null,
-            lastRecipeLoaded: null,
-            nextRecipeToLoad: null,
-            errorCount: 0,
-            apiCallsMade: 0,
-            apiCallsRemaining: 0
+            //
         }, _this.handleTest = function () {
             console.log('pew pew');
         }, _this.handleGetInitialState = function () {
@@ -55645,7 +55656,7 @@ var AdminContainer = function (_Component) {
     _createClass(AdminContainer, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            this.handleGetInitialState;
+            this.setState({ apiRecipesLoaded: this.props.apiRecipesLoaded });
         }
     }, {
         key: 'render',
@@ -55654,7 +55665,7 @@ var AdminContainer = function (_Component) {
                 'div',
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__AdminDisplay__["default"], {
-                    handleTest: this.handleTest
+                    apiRecipesLoaded: this.state.apiRecipesLoaded
                 })
             );
         }
@@ -55663,10 +55674,20 @@ var AdminContainer = function (_Component) {
     return AdminContainer;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
+AdminContainer.propTypes = {
+    apiRecipesLoaded: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.number,
+    apiRecipesNotLoaded: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.number,
+    lastApiRecipeLoaded: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.string,
+    nextApiRecipeToLoad: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.string
+};
+
+
 /* harmony default export */ __webpack_exports__["default"] = (AdminContainer);
 
 if (document.getElementById('admin_container')) {
-    __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(AdminContainer, null), document.getElementById('admin_container'));
+    var element = document.getElementById('admin_container');
+    var props = Object.assign({}, element.dataset);
+    __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(AdminContainer, props), element);
 }
 
 /***/ }),

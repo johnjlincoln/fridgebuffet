@@ -18,7 +18,7 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 
+// Core Routes
+
 // Admin Routes
-Route::get('/admin', 'AdminController@home')
-->middleware('admin')
-->name('admin');
+Route::get('/admin', 'AdminController@home')->middleware('admin')->name('admin');

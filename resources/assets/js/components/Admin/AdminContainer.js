@@ -4,16 +4,20 @@ import PropTypes from 'prop-types';
 import AdminDisplay from './AdminDisplay';
 
 class AdminContainer extends Component {
-    state = {
-        recentlyLoadedRecipes: {},
-        lastRecipePageLoaded: null,
-        nextRecipePageToLoad: null,
-        lastRecipeLoaded: null,
-        nextRecipeToLoad: null,
-        errorCount: 0,
-        apiCallsMade: 0,
-        apiCallsRemaining: 0
+    static propTypes = {
+        apiRecipesLoaded: PropTypes.number,
+        apiRecipesNotLoaded: PropTypes.number,
+        lastApiRecipeLoaded: PropTypes.string,
+        nextApiRecipeToLoad: PropTypes.string
     };
+
+    state = {
+        //
+    };
+
+    componentDidMount() {
+        this.setState({apiRecipesLoaded: this.props.apiRecipesLoaded})
+    }
 
     handleTest = () => {
         console.log('pew pew');
@@ -31,15 +35,12 @@ class AdminContainer extends Component {
         // trigger job
     };
 
-    componentDidMount() {
-        this.handleGetInitialState;
-    };
 
     render () {
         return (
             <div>
                 <AdminDisplay
-                    handleTest={this.handleTest}
+                    apiRecipesLoaded={this.state.apiRecipesLoaded}
                 />
             </div>
         )
@@ -49,5 +50,7 @@ class AdminContainer extends Component {
 export default AdminContainer;
 
 if (document.getElementById('admin_container')) {
-    ReactDOM.render(<AdminContainer />, document.getElementById('admin_container'));
+    const element = document.getElementById('admin_container');
+    const props = Object.assign({}, element.dataset);
+    ReactDOM.render(<AdminContainer {...props}/>, element);
 }
