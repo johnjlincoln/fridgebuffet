@@ -18,7 +18,17 @@ class AdminContainer extends Component {
     }
 
     handleGetInitialState = () => {
-        // AdminAjaxService.getApiRecipeData
+        // return AdminAjaxService.getApiRecipeData()
+        fetch('api/get/apiHealthData')
+            .then((resp) => resp.json())
+            .then(data => {
+                this.setState((prevState) => {
+                    return {...data, renderDisplay: true}
+                });
+            })
+            .catch(() => {
+                console.log('error');
+            })
     };
 
     handleGetNewRecipe = () => {

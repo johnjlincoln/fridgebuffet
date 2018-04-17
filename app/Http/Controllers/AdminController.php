@@ -31,15 +31,6 @@ class AdminController extends Controller
      */
     public function home()
     {
-        $api_recipes_loaded = apiRecipe::where('api_recipe_data_loaded', 1)->count();
-        $api_recipes_not_loaded = apiRecipe::where('api_recipe_data_loaded', 0)->count();
-        $last_api_recipe_loaded = apiRecipe::where('api_recipe_data_loaded', 1)->latest()->first();
-        $next_api_recipe_to_load = apiRecipe::where('api_recipe_data_loaded', 0)->oldest()->first();
-        return view('admin/admin', [
-            'api_recipes_loaded'      => $api_recipes_loaded,
-            'api_recipes_not_loaded'  => $api_recipes_not_loaded,
-            'last_api_recipe_loaded'  => $last_api_recipe_loaded->api_recipe_title,
-            'next_api_recipe_to_load' => $next_api_recipe_to_load->api_recipe_title
-        ]);
+        return view('admin/admin');
     }
 }

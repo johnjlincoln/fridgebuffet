@@ -11,12 +11,7 @@
     </head>
     <body>
     <h2 style="text-align: center"> Laravel and React application </h2>
-        <div id="admin_container"
-            data-apiRecipesLoaded={{ $api_recipes_loaded }}
-            data-apiRecipesNotLoaded={{ $api_recipes_not_loaded }}
-            data-lastApiRecipeLoaded={{ $last_api_recipe_loaded }}
-            data-nextApiRecipeToLoad={{ $next_api_recipe_to_load }}
-        >
+        <div id="admin_container">
         </div>
         <script src="{{mix('js/app.js')}}" ></script>
     </body>

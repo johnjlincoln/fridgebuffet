@@ -19,6 +19,18 @@ const AdminDisplay = props => {
                         <div className="card-body">
                             {props.apiRecipesLoaded}
                         </div>
+                        <div className="card-header">API Recipes Not Loaded: Total</div>
+                        <div className="card-body">
+                            {props.apiRecipesNotLoaded}
+                        </div>
+                        <div className="card-header">Last API Recipe Loaded:</div>
+                        <div className="card-body">
+                            {props.lastApiRecipeLoaded}
+                        </div>
+                        <div className="card-header">Next API Recipe To Load</div>
+                        <div className="card-body">
+                            {props.nextApiRecipeToLoad}
+                        </div>
                     </div>
                 </div>
             </div>
