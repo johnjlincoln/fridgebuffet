@@ -10,11 +10,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\API\apiRecipe;
 
 class AdminController extends Controller
 {
     /**
-     * Constructor
+     * Creates a new controller instance.
+     *
+     * @return void
      */
     public function __construct()
     {

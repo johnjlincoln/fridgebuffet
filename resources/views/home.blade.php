@@ -1,23 +1,20 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
-                </div>
-            </div>
+<!-- Admin View -->
+<!doctype html>
+<html lang="{{ app()->getLocale() }}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <title>Laravel React application</title>
+        <link href="{{mix('css/app.css')}}" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+    <h2 style="text-align: center"> Home </h2>
+        <div id="home"
+            data-test={{ time() }}
+        >
         </div>
-    </div>
-</div>
-@endsection
+        <script src="{{mix('js/app.js')}}" ></script>
+    </body>
+</html>

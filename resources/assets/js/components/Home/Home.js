@@ -39,13 +39,15 @@ class Home extends Component {
 export default Home;
 
 Home.propTypes = {
-    test: PropTypes.string
+    test: PropTypes.string.isRequired
 };
 
-Home.defaultProps = {
-    test: 'Hellosh'
-};
+// Home.defaultProps = {
+//     test: 'Hellosh'
+// };
 
 if (document.getElementById('home')) {
-    ReactDOM.render(<Home />, document.getElementById('home'));
+    const e = document.getElementById('home');
+    const props = Object.assign({}, e.dataset);
+    ReactDOM.render(<Home {...props}/>, e);
 }

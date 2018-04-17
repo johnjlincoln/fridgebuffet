@@ -2,25 +2,33 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import AdminDisplay from './AdminDisplay';
+import AdminAjaxService from './AdminAjaxService';
 
 class AdminContainer extends Component {
     state = {
-        recentlyLoadedRecipes: {},
-        lastRecipePageLoaded: null,
-        nextRecipePageToLoad: null,
-        lastRecipeLoaded: null,
-        nextRecipeToLoad: null,
-        errorCount: 0,
-        apiCallsMade: 0,
-        apiCallsRemaining: 0
+        apiRecipesLoaded: 0,
+        apiRecipesNotLoaded: 0,
+        lastApiRecipeLoaded: '',
+        nextApiRecipeToLoad: '',
+        renderDisplay: false
     };
 
-    handleTest = () => {
-        console.log('pew pew');
-    };
+    componentDidMount() {
+        this.handleGetInitialState();
+    }
 
     handleGetInitialState = () => {
-        // fetch from backend
+        // return AdminAjaxService.getApiRecipeData()
+        fetch('api/get/apiHealthData')
+            .then((resp) => resp.json())
+            .then(data => {
+                this.setState((prevState) => {
+                    return {...data, renderDisplay: true}
+                });
+            })
+            .catch(() => {
+                console.log('error');
+            })
     };
 
     handleGetNewRecipe = () => {
@@ -31,16 +39,18 @@ class AdminContainer extends Component {
         // trigger job
     };
 
-    componentDidMount() {
-        this.handleGetInitialState;
-    };
 
     render () {
         return (
             <div>
-                <AdminDisplay
-                    handleTest={this.handleTest}
-                />
+                {this.state.renderDisplay &&
+                    <AdminDisplay
+                        apiRecipesLoaded={this.state.apiRecipesLoaded}
+                        apiRecipesNotLoaded={this.state.apiRecipesNotLoaded}
+                        lastApiRecipeLoaded={this.state.lastApiRecipeLoaded}
+                        nextApiRecipeToLoad={this.state.nextApiRecipeToLoad}
+                    />
+                }
             </div>
         )
     }
@@ -49,5 +59,6 @@ class AdminContainer extends Component {
 export default AdminContainer;
 
 if (document.getElementById('admin_container')) {
-    ReactDOM.render(<AdminContainer />, document.getElementById('admin_container'));
+    const element = document.getElementById('admin_container');
+    ReactDOM.render(<AdminContainer/>, element);
 }

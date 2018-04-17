@@ -13,7 +13,23 @@ const AdminDisplay = props => {
                     <div className="card">
                         <div className="card-header">Admin Dashboard</div>
                         <div className="card-body">
-                            <button onClick={test}>Activate Lasers</button>
+                            <p>This is a temporary dashboard for monitoring the health of the F2F API.</p>
+                        </div>
+                        <div className="card-header">API Recipes Loaded: Total</div>
+                        <div className="card-body">
+                            {props.apiRecipesLoaded}
+                        </div>
+                        <div className="card-header">API Recipes Not Loaded: Total</div>
+                        <div className="card-body">
+                            {props.apiRecipesNotLoaded}
+                        </div>
+                        <div className="card-header">Last API Recipe Loaded:</div>
+                        <div className="card-body">
+                            {props.lastApiRecipeLoaded}
+                        </div>
+                        <div className="card-header">Next API Recipe To Load</div>
+                        <div className="card-body">
+                            {props.nextApiRecipeToLoad}
                         </div>
                     </div>
                 </div>
@@ -23,11 +39,17 @@ const AdminDisplay = props => {
 }
 
 AdminDisplay.propTypes = {
-    handleTest: PropTypes.func
+    apiRecipesLoaded: PropTypes.number,
+    apiRecipesNotLoaded: PropTypes.number,
+    lastApiRecipeLoaded: PropTypes.string,
+    nextApiRecipeToLoad: PropTypes.string
 };
 
 AdminDisplay.defaultProps = {
-    //
+    apiRecipesLoaded: 0,
+    apiRecipesNotLoaded: 0,
+    lastApiRecipeLoaded: '',
+    nextApiRecipeToLoad: ''
 };
 
 export default AdminDisplay;
