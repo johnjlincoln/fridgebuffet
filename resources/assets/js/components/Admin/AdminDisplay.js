@@ -11,7 +11,7 @@ const AdminDisplay = props => {
             <div className="row justify-content-center">
                 <div className="col-md-8">
                     <div className="card">
-                        <div className="card-header">Admin Dashboard</div>
+                        <div className="card-header"><h4>Admin Dashboard</h4></div>
                         <div className="card-body">
                             <p>This is a temporary dashboard for monitoring the health of the F2F API.</p>
                         </div>
@@ -27,6 +27,13 @@ const AdminDisplay = props => {
                         <div className="card-body">
                             {props.apiRecipesErrored}
                         </div>
+                        <div className="card-header">API Page Data:</div>
+                        <div className="card-body">
+                            {'Current Page: '}{props.currentPage}
+                        </div>
+                        <div className="card-body">
+                            {'Next Page: '}{props.nextPage}
+                        </div>
                         <div className="card-header">Last API Recipe Loaded:</div>
                         <div className="card-body">
                             {props.lastApiRecipeLoaded}
@@ -34,6 +41,10 @@ const AdminDisplay = props => {
                         <div className="card-header">Next API Recipe To Load</div>
                         <div className="card-body">
                             {props.nextApiRecipeToLoad}
+                        </div>
+                        <div className="card-header">Dashboard Functions</div>
+                        <div className="card-body">
+                            <button className="btn btn-info btn-lg btn-block" onClick={props.handleRefresh}>Refresh Data</button>
                         </div>
                     </div>
                 </div>
@@ -47,7 +58,10 @@ AdminDisplay.propTypes = {
     apiRecipesNotLoaded: PropTypes.number,
     apiRecipesErrored: PropTypes.number,
     lastApiRecipeLoaded: PropTypes.string,
-    nextApiRecipeToLoad: PropTypes.string
+    nextApiRecipeToLoad: PropTypes.string,
+    currentPage: PropTypes.number,
+    nextPage: PropTypes.number,
+    handleRefresh: PropTypes.func
 };
 
 AdminDisplay.defaultProps = {
@@ -55,7 +69,9 @@ AdminDisplay.defaultProps = {
     apiRecipesNotLoaded: 0,
     apiRecipesErrored: 0,
     lastApiRecipeLoaded: '',
-    nextApiRecipeToLoad: ''
+    nextApiRecipeToLoad: '',
+    currentPage: 0,
+    nextPage: 0,
 };
 
 export default AdminDisplay;
