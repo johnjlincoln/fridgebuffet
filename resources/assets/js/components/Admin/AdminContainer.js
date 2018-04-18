@@ -11,14 +11,16 @@ class AdminContainer extends Component {
         apiRecipesErrored: 0,
         lastApiRecipeLoaded: '',
         nextApiRecipeToLoad: '',
+        currentPage: 0,
+        nextPage: 0,
         renderDisplay: false
     };
 
     componentDidMount() {
-        this.handleGetInitialState();
+        this.handleGetData();
     }
 
-    handleGetInitialState = () => {
+    handleGetData = () => {
         // return AdminAjaxService.getApiRecipeData()
         fetch('api/get/apiHealthData')
             .then((resp) => resp.json())
@@ -30,6 +32,10 @@ class AdminContainer extends Component {
             .catch(() => {
                 console.log('error');
             })
+    };
+
+    handleRefresh = () => {
+        this.handleGetData();
     };
 
     handleGetNewRecipe = () => {
@@ -51,6 +57,9 @@ class AdminContainer extends Component {
                         apiRecipesErrored={this.state.apiRecipesErrored}
                         lastApiRecipeLoaded={this.state.lastApiRecipeLoaded}
                         nextApiRecipeToLoad={this.state.nextApiRecipeToLoad}
+                        currentPage={this.state.currentPage}
+                        nextPage={this.state.nextPage}
+                        handleRefresh={this.handleRefresh}
                     />
                 }
             </div>
