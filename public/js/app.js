@@ -14206,6 +14206,16 @@ var AdminDisplay = function AdminDisplay(props) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'card-header' },
+                        'API Recipes Not Loaded: Errored'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'card-body' },
+                        props.apiRecipesErrored
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'card-header' },
                         'Last API Recipe Loaded:'
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -14232,6 +14242,7 @@ var AdminDisplay = function AdminDisplay(props) {
 AdminDisplay.propTypes = {
     apiRecipesLoaded: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.number,
     apiRecipesNotLoaded: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.number,
+    apiRecipesErrored: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.number,
     lastApiRecipeLoaded: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
     nextApiRecipeToLoad: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string
 };
@@ -14239,6 +14250,7 @@ AdminDisplay.propTypes = {
 AdminDisplay.defaultProps = {
     apiRecipesLoaded: 0,
     apiRecipesNotLoaded: 0,
+    apiRecipesErrored: 0,
     lastApiRecipeLoaded: '',
     nextApiRecipeToLoad: ''
 };
@@ -54985,8 +54997,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -54994,7 +55004,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 
 
 
@@ -55008,18 +55017,12 @@ var Home = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
 
         _this.state = {
-            test: 'yep'
+            comingSoon: 'yep'
         };
-        _this.handleThatThing = _this.handleThatThing.bind(_this);
         return _this;
     }
 
     _createClass(Home, [{
-        key: 'handleThatThing',
-        value: function handleThatThing(e) {
-            console.log('pew pew');
-        }
-    }, {
         key: 'render',
         value: function render() {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -55042,18 +55045,7 @@ var Home = function (_Component) {
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'div',
                                 { className: 'card-body' },
-                                this.props.test,
-                                ' ',
-                                ' I\'m a react component :)'
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'div',
-                                { className: 'card-body' },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'button',
-                                    { onClick: this.handleThatThing },
-                                    'Activate Lasers'
-                                )
+                                'We\'ll have more for you soon!'
                             )
                         )
                     )
@@ -55067,18 +55059,9 @@ var Home = function (_Component) {
 
 /* harmony default export */ __webpack_exports__["default"] = (Home);
 
-Home.propTypes = {
-    test: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.string.isRequired
-};
-
-// Home.defaultProps = {
-//     test: 'Hellosh'
-// };
-
 if (document.getElementById('home')) {
-    var e = document.getElementById('home');
-    var props = Object.assign({}, e.dataset);
-    __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Home, props), e);
+    var element = document.getElementById('home');
+    __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Home, null), element);
 }
 
 /***/ }),
@@ -55677,6 +55660,7 @@ var AdminContainer = function (_Component) {
         return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AdminContainer.__proto__ || Object.getPrototypeOf(AdminContainer)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
             apiRecipesLoaded: 0,
             apiRecipesNotLoaded: 0,
+            apiRecipesErrored: 0,
             lastApiRecipeLoaded: '',
             nextApiRecipeToLoad: '',
             renderDisplay: false
@@ -55712,6 +55696,7 @@ var AdminContainer = function (_Component) {
                 this.state.renderDisplay && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__AdminDisplay__["default"], {
                     apiRecipesLoaded: this.state.apiRecipesLoaded,
                     apiRecipesNotLoaded: this.state.apiRecipesNotLoaded,
+                    apiRecipesErrored: this.state.apiRecipesErrored,
                     lastApiRecipeLoaded: this.state.lastApiRecipeLoaded,
                     nextApiRecipeToLoad: this.state.nextApiRecipeToLoad
                 })

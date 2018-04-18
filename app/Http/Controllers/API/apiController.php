@@ -61,12 +61,14 @@ class apiController extends Controller
     {
         $api_recipes_loaded = apiRecipe::where('api_recipe_data_loaded', 1)->count();
         $api_recipes_not_loaded = apiRecipe::where('api_recipe_data_loaded', 0)->count();
+        $api_recipes_errored = apiRecipe::where('api_recipe_has_errors', 1)->count();
         $last_api_recipe_loaded = apiRecipe::where('api_recipe_data_loaded', 1)->latest()->first();
         $next_api_recipe_to_load = apiRecipe::where('api_recipe_data_loaded', 0)->oldest()->first();
 
         return response()->json([
             'apiRecipesLoaded'    => $api_recipes_loaded,
             'apiRecipesNotLoaded' => $api_recipes_not_loaded,
+            'apiRecipesErrored'   => $api_recipes_errored,
             'lastApiRecipeLoaded' => $last_api_recipe_loaded->api_recipe_title,
             'nextApiRecipeToLoad' => $next_api_recipe_to_load->api_recipe_title
         ]);

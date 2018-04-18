@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 
 class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            test: 'yep'
+            comingSoon: 'yep'
         };
-        this.handleThatThing = this.handleThatThing.bind(this);
-    };
-
-    handleThatThing(e) {
-        console.log('pew pew');
     };
 
     render() {
@@ -23,10 +17,7 @@ class Home extends Component {
                         <div className="card">
                             <div className="card-header">Welcome to Fridgebuffet!</div>
                             <div className="card-body">
-                                {this.props.test}{' '} I'm a react component :)
-                            </div>
-                            <div className="card-body">
-                                <button onClick={this.handleThatThing}>Activate Lasers</button>
+                                We'll have more for you soon!
                             </div>
                         </div>
                     </div>
@@ -38,16 +29,7 @@ class Home extends Component {
 
 export default Home;
 
-Home.propTypes = {
-    test: PropTypes.string.isRequired
-};
-
-// Home.defaultProps = {
-//     test: 'Hellosh'
-// };
-
 if (document.getElementById('home')) {
-    const e = document.getElementById('home');
-    const props = Object.assign({}, e.dataset);
-    ReactDOM.render(<Home {...props}/>, e);
+    const element = document.getElementById('home');
+    ReactDOM.render(<Home />, element);
 }
