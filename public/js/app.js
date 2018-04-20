@@ -14271,25 +14271,21 @@ var AdminDisplay = function AdminDisplay(props) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'card-body' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'card-body' },
-                            'Last Successful Recipe Job Run: ',
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-                            props.recipeJobHealth
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'card-body' },
-                            'Last Successful Recipe Data Job Run: ',
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-                            props.recipeDataJobHealth
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'card-body' },
-                            'Logs...'
-                        )
+                        'Last Successful Recipe Job Run: ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                        props.recipeJobHealth
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'card-body' },
+                        'Last Successful Recipe Data Job Run: ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                        props.recipeDataJobHealth
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'card-body' },
+                        'Logs...'
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',

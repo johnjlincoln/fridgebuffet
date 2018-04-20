@@ -50,17 +50,15 @@ const AdminDisplay = props => {
                         </div>
                         <div className="card-header">Integration Job Health:</div>
                         <div className="card-body">
-                            <div className="card-body">
-                                {'Last Successful Recipe Job Run: '}<br />
-                                {props.recipeJobHealth}
-                            </div>
-                            <div className="card-body">
-                                {'Last Successful Recipe Data Job Run: '}<br />
-                                {props.recipeDataJobHealth}
-                            </div>
-                            <div className="card-body">
-                                {'Logs...'}
-                            </div>
+                            {'Last Successful Recipe Job Run: '}<br />
+                            {props.recipeJobHealth}
+                        </div>
+                        <div className="card-body">
+                            {'Last Successful Recipe Data Job Run: '}<br />
+                            {props.recipeDataJobHealth}
+                        </div>
+                        <div className="card-body">
+                            {'Logs...'}
                         </div>
                         <div className="card-header">Dashboard Functions</div>
                         <div className="card-body">
