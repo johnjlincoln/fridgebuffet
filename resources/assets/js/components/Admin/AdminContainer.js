@@ -1,3 +1,10 @@
+/**
+ * Admin Container Component
+ *
+ * @author John J Lincoln <jlincoln88@gmail.com>
+ * @copyright 2018 Arctic Pangolin
+ */
+
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
@@ -13,6 +20,8 @@ class AdminContainer extends Component {
         nextApiRecipeToLoad: '',
         currentPage: 0,
         nextPage: 0,
+        recipeJobHealth: '',
+        recipeDataJobHealth: '',
         renderDisplay: false
     };
 
@@ -59,6 +68,8 @@ class AdminContainer extends Component {
                         nextApiRecipeToLoad={this.state.nextApiRecipeToLoad}
                         currentPage={this.state.currentPage}
                         nextPage={this.state.nextPage}
+                        recipeJobHealth={this.state.recipeJobHealth}
+                        recipeDataJobHealth={this.state.recipeDataJobHealth}
                         handleRefresh={this.handleRefresh}
                     />
                 }

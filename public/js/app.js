@@ -14149,12 +14149,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
+/**
+ * Admin Display Component
+ *
+ * @author John J Lincoln <jlincoln88@gmail.com>
+ * @copyright 2018 Arctic Pangolin
+ */
 
 
 
-var test = function test() {
-    console.log('pew pew');
-};
 
 var AdminDisplay = function AdminDisplay(props) {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -14182,9 +14185,9 @@ var AdminDisplay = function AdminDisplay(props) {
                         'div',
                         { className: 'card-body' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'p',
+                            'h5',
                             null,
-                            'This is a temporary dashboard for monitoring the health of the F2F API.'
+                            'F2F Integration Job Health'
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -14200,7 +14203,7 @@ var AdminDisplay = function AdminDisplay(props) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'card-header' },
-                        'API Recipes Not Loaded: Total'
+                        'API Recipes Staged: Total'
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
@@ -14221,6 +14224,12 @@ var AdminDisplay = function AdminDisplay(props) {
                         'div',
                         { className: 'card-header' },
                         'API Page Data:'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'card-body' },
+                        'Estimated pages remaining: ',
+                        4824 - props.nextPage
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
@@ -14247,12 +14256,36 @@ var AdminDisplay = function AdminDisplay(props) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'card-header' },
-                        'Next API Recipe To Load'
+                        'Next API Recipe To Load:'
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'card-body' },
                         props.nextApiRecipeToLoad
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'card-header' },
+                        'Integration Job Health:'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'card-body' },
+                        'Last Successful Recipe Job Run: ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                        props.recipeJobHealth
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'card-body' },
+                        'Last Successful Recipe Data Job Run: ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                        props.recipeDataJobHealth
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'card-body' },
+                        'Logs...'
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
@@ -14282,7 +14315,9 @@ AdminDisplay.propTypes = {
     nextApiRecipeToLoad: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
     currentPage: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.number,
     nextPage: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.number,
-    handleRefresh: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func
+    handleRefresh: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func,
+    recipeJobHealth: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
+    recipeDataJobHealth: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string
 };
 
 AdminDisplay.defaultProps = {
@@ -14292,7 +14327,9 @@ AdminDisplay.defaultProps = {
     lastApiRecipeLoaded: '',
     nextApiRecipeToLoad: '',
     currentPage: 0,
-    nextPage: 0
+    nextPage: 0,
+    recipeJobHealth: '',
+    recipeDataJobHealth: ''
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (AdminDisplay);
@@ -55128,6 +55165,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/**
+ * Admin Container Component
+ *
+ * @author John J Lincoln <jlincoln88@gmail.com>
+ * @copyright 2018 Arctic Pangolin
+ */
+
 
 
 
@@ -55156,6 +55200,8 @@ var AdminContainer = function (_Component) {
             nextApiRecipeToLoad: '',
             currentPage: 0,
             nextPage: 0,
+            recipeJobHealth: '',
+            recipeDataJobHealth: '',
             renderDisplay: false
         }, _this.handleGetData = function () {
             // return AdminAjaxService.getApiRecipeData()
@@ -55196,6 +55242,8 @@ var AdminContainer = function (_Component) {
                     nextApiRecipeToLoad: this.state.nextApiRecipeToLoad,
                     currentPage: this.state.currentPage,
                     nextPage: this.state.nextPage,
+                    recipeJobHealth: this.state.recipeJobHealth,
+                    recipeDataJobHealth: this.state.recipeDataJobHealth,
                     handleRefresh: this.handleRefresh
                 })
             );
@@ -55770,6 +55818,13 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
+/**
+ * Admin AJAX Service
+ *
+ * @author John J Lincoln <jlincoln88@gmail.com>
+ * @copyright 2018 Arctic Pangolin
+ */
+
 
 
 
