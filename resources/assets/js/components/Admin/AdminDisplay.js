@@ -1,9 +1,12 @@
+/**
+ * Admin Display Component
+ *
+ * @author John J Lincoln <jlincoln88@gmail.com>
+ * @copyright 2018 Arctic Pangolin
+ */
+
 import React from 'react'
 import PropTypes from 'prop-types';
-
-const test = () => {
-    console.log('pew pew');
-};
 
 const AdminDisplay = props => {
     return (
@@ -13,13 +16,13 @@ const AdminDisplay = props => {
                     <div className="card">
                         <div className="card-header"><h4>Admin Dashboard</h4></div>
                         <div className="card-body">
-                            <p>This is a temporary dashboard for monitoring the health of the F2F API.</p>
+                            <h5>F2F Integration Job Health</h5>
                         </div>
                         <div className="card-header">API Recipes Loaded: Total</div>
                         <div className="card-body">
                             {props.apiRecipesLoaded}
                         </div>
-                        <div className="card-header">API Recipes Not Loaded: Total</div>
+                        <div className="card-header">API Recipes Staged: Total</div>
                         <div className="card-body">
                             {props.apiRecipesNotLoaded}
                         </div>
@@ -28,6 +31,9 @@ const AdminDisplay = props => {
                             {props.apiRecipesErrored}
                         </div>
                         <div className="card-header">API Page Data:</div>
+                        <div className="card-body">
+                            {'Estimated pages remaining: '}{4824 - props.nextPage}
+                        </div>
                         <div className="card-body">
                             {'Current Page: '}{props.currentPage}
                         </div>
@@ -38,9 +44,23 @@ const AdminDisplay = props => {
                         <div className="card-body">
                             {props.lastApiRecipeLoaded}
                         </div>
-                        <div className="card-header">Next API Recipe To Load</div>
+                        <div className="card-header">Next API Recipe To Load:</div>
                         <div className="card-body">
                             {props.nextApiRecipeToLoad}
+                        </div>
+                        <div className="card-header">Integration Job Health:</div>
+                        <div className="card-body">
+                            <div className="card-body">
+                                {'Last Successful Recipe Job Run: '}<br />
+                                {props.recipeJobHealth}
+                            </div>
+                            <div className="card-body">
+                                {'Last Successful Recipe Data Job Run: '}<br />
+                                {props.recipeDataJobHealth}
+                            </div>
+                            <div className="card-body">
+                                {'Logs...'}
+                            </div>
                         </div>
                         <div className="card-header">Dashboard Functions</div>
                         <div className="card-body">
@@ -61,7 +81,9 @@ AdminDisplay.propTypes = {
     nextApiRecipeToLoad: PropTypes.string,
     currentPage: PropTypes.number,
     nextPage: PropTypes.number,
-    handleRefresh: PropTypes.func
+    handleRefresh: PropTypes.func,
+    recipeJobHealth: PropTypes.string,
+    recipeDataJobHealth: PropTypes.string,
 };
 
 AdminDisplay.defaultProps = {
@@ -72,6 +94,8 @@ AdminDisplay.defaultProps = {
     nextApiRecipeToLoad: '',
     currentPage: 0,
     nextPage: 0,
+    recipeJobHealth: '',
+    recipeDataJobHealth: '',
 };
 
 export default AdminDisplay;

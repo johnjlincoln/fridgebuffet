@@ -68,6 +68,9 @@ class apiController extends Controller
         $current_page = isset($recipe) ? $recipe->api_recipe_page : 1;
         $next_page = isset($recipe) ? $recipe->api_recipe_page + 1 : 1;
 
+        $most_recently_pulled_recipe = apiRecipe::latest()->first();
+        $most_recently_pulled_data = apiRecipeData::latest()->first();
+
         return response()->json([
             'apiRecipesLoaded'    => $api_recipes_loaded,
             'apiRecipesNotLoaded' => $api_recipes_not_loaded,
@@ -75,7 +78,9 @@ class apiController extends Controller
             'lastApiRecipeLoaded' => $last_api_recipe_loaded->api_recipe_title,
             'nextApiRecipeToLoad' => $next_api_recipe_to_load->api_recipe_title,
             'currentPage'         => $current_page,
-            'nextPage'            => $next_page
+            'nextPage'            => $next_page,
+            'recipeJobHealth'     => $most_recently_pulled_recipe->created_at->format('Y-m-d H:i:s'),
+            'recipeDataJobHealth' => $most_recently_pulled_data->created_at->format('Y-m-d H:i:s')
         ]);
     }
 
