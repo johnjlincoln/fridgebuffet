@@ -55208,7 +55208,7 @@ var AdminContainer = function (_Component) {
             fetch('api/get/apiHealthData').then(function (resp) {
                 return resp.json();
             }).then(function (data) {
-                _this.setState(function (prevState) {
+                _this.setState(function () {
                     return _extends({}, data, { renderDisplay: true });
                 });
             }).catch(function () {

@@ -13,6 +13,8 @@
 
 // Register authentication routes (login/logout/register/etc)
 Auth::routes();
+// Temp logout override due to POST requirement as default
+Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 // Home Routes
 Route::get('/', 'HomeController@index')->name('home');

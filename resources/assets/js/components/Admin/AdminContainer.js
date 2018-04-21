@@ -34,7 +34,7 @@ class AdminContainer extends Component {
         fetch('api/get/apiHealthData')
             .then((resp) => resp.json())
             .then(data => {
-                this.setState((prevState) => {
+                this.setState(() => {
                     return {...data, renderDisplay: true}
                 });
             })
