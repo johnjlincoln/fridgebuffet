@@ -55122,7 +55122,7 @@ var Home = function (_Component) {
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'div',
                                 { className: 'card-body' },
-                                'We\'ll have more for you soon!'
+                                'We\'ll have more for you soon! Register now for early access to content!'
                             )
                         )
                     )

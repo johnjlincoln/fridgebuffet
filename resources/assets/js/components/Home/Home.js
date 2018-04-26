@@ -17,7 +17,7 @@ class Home extends Component {
                         <div className="card">
                             <div className="card-header">Welcome to Fridgebuffet!</div>
                             <div className="card-body">
-                                We'll have more for you soon!
+                                We'll have more for you soon! Register now for early access to content!
                             </div>
                         </div>
                     </div>
