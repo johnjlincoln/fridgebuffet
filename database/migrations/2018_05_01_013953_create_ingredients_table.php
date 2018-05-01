@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInstructionTable extends Migration
+class CreateIngredientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,20 @@ class CreateInstructionTable extends Migration
      */
     public function up()
     {
-        Schema::create('instruction', function (Blueprint $table) {
+        Schema::create('ingredients', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('recipe_id');
-            $table->tinyInteger('step');
-            $table->string('text');
+            $table->string('name');
+            $table->string('description');
+            $table->string('tag');
             $table->timestamps();
 
             $table->foreign('recipe_id')
-                  ->references('id')->on('recipe')
+                  ->references('id')->on('recipes')
                   ->onDelete('cascade');
         });
         // set PK (id) to start at 100000
-        DB::update("ALTER TABLE ingredient AUTO_INCREMENT = 100000;");
+        DB::update("ALTER TABLE ingredients AUTO_INCREMENT = 100000;");
     }
 
     /**
@@ -35,6 +36,6 @@ class CreateInstructionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('instruction');
+        Schema::dropIfExists('ingredients');
     }
 }

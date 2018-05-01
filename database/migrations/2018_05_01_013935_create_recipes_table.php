@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRecipeTable extends Migration
+class CreateRecipesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateRecipeTable extends Migration
      */
     public function up()
     {
-        Schema::create('recipe', function (Blueprint $table) {
+        Schema::create('recipes', function (Blueprint $table) {
             $table->bigIncrements('id')
             $table->string('name');
             $table->string('image_url');
@@ -22,7 +22,7 @@ class CreateRecipeTable extends Migration
             $table->timestamps();
         });
         // set PK (id) to start at 100000
-        DB::update("ALTER TABLE recipe AUTO_INCREMENT = 100000;");
+        DB::update("ALTER TABLE recipes AUTO_INCREMENT = 100000;");
     }
 
     /**
@@ -32,6 +32,6 @@ class CreateRecipeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recipe');
+        Schema::dropIfExists('recipes');
     }
 }
