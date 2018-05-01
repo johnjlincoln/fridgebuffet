@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Database Seeder
+ * Seeder for the Instructions Table
  *
  * @author John J Lincoln <jlincoln88@gmail.com>
  * @copyright 2018 Arctic Pangolin
@@ -9,7 +9,7 @@
 
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class InstructionsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,10 +18,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            RecipesTableSeeder::class,
-            IngredientsTableSeeder::class,
-            InstructionsTableSeeder::class,
-        ]);
+        //
     }
 }
