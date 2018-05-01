@@ -15,7 +15,6 @@ class CreateRecipeTable extends Migration
     {
         Schema::create('recipe', function (Blueprint $table) {
             $table->bigIncrements('id')
-                  ->unsigned();
             $table->string('name');
             $table->string('image_url');
             $table->string('publisher');
