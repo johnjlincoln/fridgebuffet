@@ -61,6 +61,16 @@ class Recipe extends Model
     ];
 
     /**
+     * Gets the ingredients for this recipe.
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function ingredients()
+    {
+        return $this->hasMany('App\Models\Ingredient');
+    }
+
+    /**
      * Validate the model attributes
      * TODO: load the validation errors into a new model attribute?
      * TODO: this should go into a BaseModel, like the save() implementation
@@ -77,7 +87,7 @@ class Recipe extends Model
      * Saves the model
      * TODO: since we're just wrapping validation around Eloquent's save() - let's move this to a BaseModel
      *
-     * @param array $options Needed for compatibility with parent save - unsure of implementation.
+     * @param array $options Needed for compatibility with parent save - unsure of implementation
      * @return bool
      */
     public function save(array $options = [])
