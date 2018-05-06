@@ -10,7 +10,6 @@
 namespace App\Models;
 
 use App\Models\BaseModel;
-use Validator;
 
 class Ingredient extends BaseModel
 {
