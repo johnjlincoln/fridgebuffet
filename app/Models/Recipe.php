@@ -9,34 +9,33 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Validator;
+use App\Models\BaseModel;
 
-class Recipe extends Model
+class Recipe extends BaseModel
 {
     /**
-     * The table associated with the model.
+     * The table associated with the recipe model.
      *
      * @var string
      */
     protected $table = 'recipes';
 
     /**
-     * The primary key associated with the model.
+     * The primary key associated with the recipe model.
      *
      * @var string
      */
     protected $primaryKey = 'id';
 
     /**
-    * Indicates if the model should be timestamped.
+    * Indicates if the recipe model should be timestamped.
     *
     * @var bool
     */
     public $timestamps = true;
 
     /**
-    * The attributes that are mass assignable.
+    * The recipe attributes that are mass assignable.
     *
     * @var array
     */
@@ -48,7 +47,7 @@ class Recipe extends Model
     ];
 
     /**
-    * Validation rules for the model attributes.
+    * Validation rules for the recipe attributes.
     * TODO: tighten up these rules - think DB safety, as well as application stuff, like string display lengths / etc.
     *
     * @var array
@@ -68,30 +67,5 @@ class Recipe extends Model
     public function ingredients()
     {
         return $this->hasMany('App\Models\Ingredient');
-    }
-
-    /**
-     * Validate the model attributes
-     * TODO: load the validation errors into a new model attribute?
-     * TODO: this should go into a BaseModel, like the save() implementation
-     *
-     * @return bool
-     */
-    public function validate()
-    {
-        $validator = Validator::make($this->attributes, $this->rules);
-        return $validator->passes();
-    }
-
-    /**
-     * Saves the model
-     * TODO: since we're just wrapping validation around Eloquent's save() - let's move this to a BaseModel
-     *
-     * @param array $options Needed for compatibility with parent save - unsure of implementation
-     * @return bool
-     */
-    public function save(array $options = [])
-    {
-        return $this->validate ? parent::save() : false;
     }
 }
