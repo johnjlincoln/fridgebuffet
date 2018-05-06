@@ -34,13 +34,13 @@ class BaseModel extends Model
     }
 
     /**
-     * Saves the model
+     * Saves the model if it passes validation
      *
      * @param array $options Needed for compatibility with parent save - unsure of implementation
      * @return bool
      */
     public function save(array $options = [])
     {
-        return $this->validate ? parent::save() : false;
+        return $this->validate() ? parent::save() : false;
     }
 }
