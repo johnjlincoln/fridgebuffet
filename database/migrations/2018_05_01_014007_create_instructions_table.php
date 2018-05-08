@@ -25,7 +25,7 @@ class CreateInstructionsTable extends Migration
                   ->onDelete('cascade');
         });
         // set PK (id) to start at 100000
-        DB::update("ALTER TABLE instructions AUTO_INCREMENT = 100000;");
+        DB::statement("ALTER TABLE instructions AUTO_INCREMENT = 100000;");
     }
 
     /**

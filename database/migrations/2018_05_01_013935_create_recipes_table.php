@@ -22,7 +22,7 @@ class CreateRecipesTable extends Migration
             $table->timestamps();
         });
         // set PK (id) to start at 100000
-        DB::update("ALTER TABLE recipes AUTO_INCREMENT = 100000;");
+        DB::statement("ALTER TABLE recipes AUTO_INCREMENT = 100000;");
     }
 
     /**

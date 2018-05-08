@@ -13,9 +13,9 @@ class DropPlaceholderTables extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('recipes');
-        Schema::dropIfExists('ingredients');
         Schema::dropIfExists('instructions');
+        Schema::dropIfExists('ingredients');
+        Schema::dropIfExists('recipes');
     }
 
     /**
@@ -25,8 +25,8 @@ class DropPlaceholderTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recipes');
-        Schema::dropIfExists('ingredients');
         Schema::dropIfExists('instructions');
+        Schema::dropIfExists('ingredients');
+        Schema::dropIfExists('recipes');
     }
 }
