@@ -18,6 +18,25 @@ class RecipesTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('recipes')->insert([
+            'name'       => 'Classic Grilled Cheese',
+            'image_url'  => 'http://capstonevt.org/sites/default/files/Grilled-Cheese-Sandwiches_1.jpg',
+            'publisher'  => 'FridgeBuffet',
+            'source_url' => 'https://fridgebuffet.com',
+        ]);
+
+        DB::table('recipes')->insert([
+            'name'       => 'Classic Tomato Soup',
+            'image_url'  => 'https://domestocrat.files.wordpress.com/2012/11/img_6521.jpg',
+            'publisher'  => 'FridgeBuffet',
+            'source_url' => 'https://fridgebuffet.com',
+        ]);
+
+        DB::table('recipes')->insert([
+            'name'       => 'Classic Bread Bowl',
+            'image_url'  => 'https://domestocrat.files.wordpress.com/2012/09/img_4333.jpg'  ,
+            'publisher'  => 'FridgeBuffet',
+            'source_url' => 'https://fridgebuffet.com',
+        ]);
     }
 }
