@@ -38,7 +38,7 @@ class RecipesTableSeeder extends Seeder
 
         DB::table('recipes')->insert([
             'name'       => 'Classic Bread Bowl',
-            'image_url'  => 'https://domestocrat.files.wordpress.com/2012/09/img_4333.jpg'  ,
+            'image_url'  => 'https://domestocrat.files.wordpress.com/2012/09/img_4333.jpg',
             'publisher'  => 'FridgeBuffet',
             'source_url' => 'https://fridgebuffet.com',
             'created_at' => Carbon\Carbon::now()->toDateTimeString(),
