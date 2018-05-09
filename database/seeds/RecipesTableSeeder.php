@@ -23,6 +23,8 @@ class RecipesTableSeeder extends Seeder
             'image_url'  => 'http://capstonevt.org/sites/default/files/Grilled-Cheese-Sandwiches_1.jpg',
             'publisher'  => 'FridgeBuffet',
             'source_url' => 'https://fridgebuffet.com',
+            'created_at' => Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => Carbon\Carbon::now()->toDateTimeString(),
         ]);
 
         DB::table('recipes')->insert([
@@ -30,6 +32,8 @@ class RecipesTableSeeder extends Seeder
             'image_url'  => 'https://domestocrat.files.wordpress.com/2012/11/img_6521.jpg',
             'publisher'  => 'FridgeBuffet',
             'source_url' => 'https://fridgebuffet.com',
+            'created_at' => Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => Carbon\Carbon::now()->toDateTimeString(),
         ]);
 
         DB::table('recipes')->insert([
@@ -37,6 +41,8 @@ class RecipesTableSeeder extends Seeder
             'image_url'  => 'https://domestocrat.files.wordpress.com/2012/09/img_4333.jpg'  ,
             'publisher'  => 'FridgeBuffet',
             'source_url' => 'https://fridgebuffet.com',
+            'created_at' => Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => Carbon\Carbon::now()->toDateTimeString(),
         ]);
     }
 }

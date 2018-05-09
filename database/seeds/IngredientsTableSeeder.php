@@ -30,6 +30,8 @@ class IngredientsTableSeeder extends Seeder
             'name'        => 'Sourdough Bread',
             'description' => 'Sourdough Bread',
             'tag'         => 'Bread',
+            'created_at' => Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => Carbon\Carbon::now()->toDateTimeString(),
         ]);
 
         DB::table('ingredients')->insert([
@@ -37,6 +39,8 @@ class IngredientsTableSeeder extends Seeder
             'name'        => 'Aged Sharp Cheddar Cheese',
             'description' => 'Aged Sharp Cheddar Cheese',
             'tag'         => 'Cheese',
+            'created_at' => Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => Carbon\Carbon::now()->toDateTimeString(),
         ]);
 
         DB::table('ingredients')->insert([
@@ -44,6 +48,8 @@ class IngredientsTableSeeder extends Seeder
             'name'        => 'Butter',
             'description' => 'Butter',
             'tag'         => 'Butter',
+            'created_at' => Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => Carbon\Carbon::now()->toDateTimeString(),
         ]);
 
         // Tomato Soup
@@ -53,6 +59,8 @@ class IngredientsTableSeeder extends Seeder
             'name'        => 'Peeled Tomatoes',
             'description' => 'Peeled Tomatoes',
             'tag'         => 'Tomato',
+            'created_at' => Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => Carbon\Carbon::now()->toDateTimeString(),
         ]);
 
         DB::table('ingredients')->insert([
@@ -60,6 +68,8 @@ class IngredientsTableSeeder extends Seeder
             'name'        => 'Heavy Cream',
             'description' => 'Heavy Cream',
             'tag'         => 'Cream',
+            'created_at' => Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => Carbon\Carbon::now()->toDateTimeString(),
         ]);
 
         DB::table('ingredients')->insert([
@@ -67,6 +77,8 @@ class IngredientsTableSeeder extends Seeder
             'name'        => 'Vegetable Broth',
             'description' => 'Vegetable Broth',
             'tag'         => 'Broth',
+            'created_at' => Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => Carbon\Carbon::now()->toDateTimeString(),
         ]);
 
         DB::table('ingredients')->insert([
@@ -74,6 +86,8 @@ class IngredientsTableSeeder extends Seeder
             'name'        => 'Basil',
             'description' => 'Fresh Basil',
             'tag'         => 'Spice',
+            'created_at' => Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => Carbon\Carbon::now()->toDateTimeString(),
         ]);
 
         // Bread Bowl
@@ -83,6 +97,8 @@ class IngredientsTableSeeder extends Seeder
             'name'        => 'Egg',
             'description' => 'Egg',
             'tag'         => 'Egg',
+            'created_at' => Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => Carbon\Carbon::now()->toDateTimeString(),
         ]);
 
         DB::table('ingredients')->insert([
@@ -90,6 +106,8 @@ class IngredientsTableSeeder extends Seeder
             'name'        => 'Yeast',
             'description' => 'Yeast',
             'tag'         => 'Yeast',
+            'created_at' => Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => Carbon\Carbon::now()->toDateTimeString(),
         ]);
 
         DB::table('ingredients')->insert([
@@ -97,6 +115,8 @@ class IngredientsTableSeeder extends Seeder
             'name'        => 'Flour',
             'description' => 'Flour',
             'tag'         => 'Flour',
+            'created_at' => Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => Carbon\Carbon::now()->toDateTimeString(),
         ]);
 
         DB::table('ingredients')->insert([
@@ -104,6 +124,8 @@ class IngredientsTableSeeder extends Seeder
             'name'        => 'Salt',
             'description' => 'Salt',
             'tag'         => 'Salt',
+            'created_at' => Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => Carbon\Carbon::now()->toDateTimeString(),
         ]);
     }
 }
