@@ -19,8 +19,11 @@ Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 // Home Routes
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
+//TODO: sort out the landing page for auth vs not-auth
+//TODO: then develop auth
 
 // Core Routes
 
 // Admin Routes
+// TODO: use domain routes to convert this safely to admin.fridgebuffet.com
 Route::get('/admin', 'AdminController@home')->middleware('admin')->name('admin');
