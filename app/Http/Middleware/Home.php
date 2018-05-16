@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Admin Middleware
+ * Home Middleware
  *
  * @author John J Lincoln <jlincoln88@gmail.com>
  * @copyright 2018 Arctic Pangolin
@@ -11,7 +11,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class Admin
+class Home
 {
     /**
      * Handle an incoming request.
@@ -22,7 +22,7 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->user()->isAdmin()) {
+        if (auth()->user()->isRegistered() || auth()->user()->isAdmin()) {
             return $next($request);
         }
         return redirect()->route('index');
