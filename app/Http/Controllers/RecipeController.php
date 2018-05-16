@@ -15,5 +15,8 @@ use App\Http\Controllers\Controller;
 
 class RecipeController extends Controller
 {
-    // Primary Recipe Controller
+    public function index()
+    {
+        return view('core/core');
+    }
 }
